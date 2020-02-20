@@ -40,6 +40,12 @@
         </script>
 
         <script>
+            targetElement.ontouchend = (e) => {
+                e.preventDefault();
+            };
+        </script>
+
+        <script>
             var x = document.getElementById("demo");
 
             function getLocation() {

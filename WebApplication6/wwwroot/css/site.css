@@ -1,11 +1,16 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification 
 for details on configuring this project to bundle and minify static web assets. */
+html,body{
+    overflow: hidden;
+}
 body {
     
     background-color: #424141;
     font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
     width: 100%;
+    
+
     
 }
 
