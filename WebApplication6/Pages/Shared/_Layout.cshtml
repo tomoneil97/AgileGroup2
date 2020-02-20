@@ -29,6 +29,7 @@
         <a asp-page="./Settings">Settings</a>
         <a  asp-page="./Privacy">Privacy</a>
         <a asp-page="./Contact">Contact</a>
+
     </div>
 
     <script>
@@ -48,12 +49,16 @@
         }
     </script>
 
+    <script>
+
+    </script>
+
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    
         @RenderBody()
         
-    </div>
+    
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

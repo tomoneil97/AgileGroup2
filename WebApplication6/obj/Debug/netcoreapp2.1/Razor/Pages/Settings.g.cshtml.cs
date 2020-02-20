@@ -51,7 +51,7 @@ using WebApplication6;
 #line default
 #line hidden
             BeginContext(87, 124, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "361602b580fd4c70b2b3441ec4fd50ba", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0b59c683de764ff6b0a17dd66b87df52", async() => {
                 BeginContext(93, 111, true);
                 WriteLiteral("\r\n    <div class=\"menu\">\r\n        <h2>Settings</h2>\r\n        Please put settings in here ty\r\n    </div>\r\n    \r\n");
                 EndContext();
