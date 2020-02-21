@@ -12532,23 +12532,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\harve\\.nuget\\packages\\": {},
+    "C:\\Users\\Work Account\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\harve\\Documents\\GitHub\\AgileGroup2\\WebApplication6\\CarPool.csproj",
+      "projectUniqueName": "C:\\Users\\Work Account\\Documents\\GitHub\\AgileGroup2\\WebApplication6\\CarPool.csproj",
       "projectName": "CarPool",
-      "projectPath": "C:\\Users\\harve\\Documents\\GitHub\\AgileGroup2\\WebApplication6\\CarPool.csproj",
-      "packagesPath": "C:\\Users\\harve\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\harve\\Documents\\GitHub\\AgileGroup2\\WebApplication6\\obj\\",
+      "projectPath": "C:\\Users\\Work Account\\Documents\\GitHub\\AgileGroup2\\WebApplication6\\CarPool.csproj",
+      "packagesPath": "C:\\Users\\Work Account\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Work Account\\Documents\\GitHub\\AgileGroup2\\WebApplication6\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\harve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Work Account\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
