@@ -1,0 +1,243 @@
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification 
+for details on configuring this project to bundle and minify static web assets. */
+html, body {
+    overflow: hidden;
+}
+
+body {
+    background-color: #424141;
+    font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+div.menu {
+    padding-top: 20px;
+    padding: 10px;
+    background-color: #525252;
+    color: white;
+    border-radius: 20px;
+    margin-left:5%;
+    margin-right:5%;
+}
+
+div.request {
+    background-color: #171717;
+    color: white;
+    position: fixed;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding-bottom: 2.5%;
+    padding-left: 10%;
+    float:left;
+<<<<<<< HEAD:CarPool/wwwroot/css/site.css
+=======
+    padding-right: 10%;
+>>>>>>> a9d9b0fa86b3ea4fe298ac093e38a66c987e824e:WebApplication6/wwwroot/css/site.css
+}
+
+button.request {
+    background-color: #fcfcfc;
+    color: black;
+    padding: 14px 20px;
+<<<<<<< HEAD:CarPool/wwwroot/css/site.css
+    position: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    max-width: 33%;
+=======
+    
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    max-height:15%;
+    max-width: 40%;
+    display:inline-block;
+    margin-left:60%;
+>>>>>>> a9d9b0fa86b3ea4fe298ac093e38a66c987e824e:WebApplication6/wwwroot/css/site.css
+}
+
+    button.request:hover {
+        background-color: #d4d4d4;
+    }
+
+.userIcon {
+    border-radius: 50%;
+    width: 66px;
+    height: 66px;
+    margin-left: 10%;
+}
+
+    .userIcon:hover {
+        opacity: 0.8;
+        color: white;
+    }
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: 0px 16px 32px 0px rgba(0,0,0,0.4);
+}
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 4px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+nav.topbar{
+    top:0px;
+    background-color: #222;
+    position: fixed;
+    right:0px;
+    left: 0px;
+    z-index: 10;
+}
+
+
