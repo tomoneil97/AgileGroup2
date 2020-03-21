@@ -6,7 +6,7 @@
         /* Set the size of the div element that contains the map */
         #map {
             
-            height: 1200px; /* The height is 400 pixels */
+            height: 2000px; /* The height is 400 pixels */
             max-height: 75%;
             width: 100%; /* The width is the width of the web page */
             position:absolute;
@@ -25,7 +25,7 @@
     <div id="mySidenav" class="sidenav">
         <a href="Home.aspx">Home</a>
         <a asp-page="./Profile">Profile</a>
-        <a asp-page="./History">History</a>
+        <a href="MyRides.aspx">My Rides</a>
         <a asp-page="./Settings">Settings</a>
         <a asp-page="./Privacy">Privacy</a>
         <a asp-page="./Contact">Contact</a>

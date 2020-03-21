@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My Rides</title>
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <div>
+        <nav class="topbar">
+            <input type="image" src="images/user.png" alt="icon" class="userIcon" onclick="openNav()">
+        </nav>
+    </div>
+    
+
+    <div id="mySidenav" class="sidenav">
+        <a href="Home.aspx">Home</a>
+        <a asp-page="./Profile">Profile</a>
+        <a href="MyRides.aspx">My Rides</a>
+        <a asp-page="./Settings">Settings</a>
+        <a asp-page="./Privacy">Privacy</a>
+        <a asp-page="./Contact">Contact</a>
+
+    </div>
+    
+    <script>
+        function openNav() {
+            if (document.getElementById("mySidenav").style.width == "250px") {
+                closeNav();
+            }
+            else {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+</body>
+</html>
