@@ -9,10 +9,8 @@
 
         <button onclick="document.getElementById('id01').style.display='block'" class="loginbuttons">Login</button>
 
+        <button onclick="document.getElementById('id02').style.display='block'" class="loginbuttons">Register</button>
 
-        <a href="Register.aspx">
-            <input class="loginbuttons" type="button" value="Sign Up" />
-        </a>
     </div>
 
     <div id="id01" class="modal">
@@ -20,17 +18,17 @@
         <form class="modal-content animate" action="/action_page.php" method="post">
             <div class="imgcontainer">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                <h1> Log In </h1>
             </div>
 
             <div class="container">
                 <label class="login" for="uname"><b>Username</b></label>
-                <input  class="login" type="text" placeholder="Enter Username" name="uname" required>
+                <input class="login" type="text" placeholder="Enter Username" name="uname" required>
 
                 <label class="login" for="psw"><b>Password</b></label>
                 <input class="login" type="password" placeholder="Enter Password" name="psw" required>
 
-                <button class="loginbuttons"type="submit">Login</button>
+                <button type="submit">Login</button>
                 <label>
                     <input type="checkbox" checked="checked" name="remember"> Remember me
                 </label>
@@ -41,16 +39,60 @@
                 <span class="psw">Forgot <a href="#">password?</a></span>
             </div>
         </form>
-        </div>
+    </div>
+
+    <div id="id02" class="modal">
+
+        <form class="modal-content animate" action="/action_page.php" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <h1> Register </h1>
+            </div>
+
+            <div class="container">
+                <label class="login" for="uname"><b>Username</b></label>
+                <input class="login" type="text" placeholder="Enter Username" name="uname" required>
+
+                <label class="login" for="psw"><b>Password</b></label>
+                <input class="login" type="password" placeholder="Enter Password" name="psw" required>
+
+                <label class="login"> Forename: </label>
+                <input class="login" type="text" name="forename" placeholder="Enter Forename" />
+                <label class="login"> Surname: </label>
+                <input class="login" type="text" name="surname" placeholder="Enter Surname" />
+                <label class="login">Gender: </label>
+                <select class="login" id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select> <br />
+                <button type="submit">Next</button>
+               
+            </div>
+
+           
+        </form>
+    </div>
 
     <script>
         // Get the modal
-        var modal = document.getElementById('id01');
+        var modal1 = document.getElementById('id01');
+
+
+        var modal2 = document.getElementById('id02');
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == modal1) {
+                modal1.style.display = "none";
+            }
+        }
+
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
             }
         }
     </script>
