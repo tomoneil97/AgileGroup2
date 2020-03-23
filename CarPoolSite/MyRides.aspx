@@ -22,6 +22,21 @@
         <a asp-page="./Contact">Contact</a>
 
     </div>
+
+    <div class="menu">
+        <table>
+            <thead>
+                <tr>
+                    <th> Ride Date</th>
+                    <th> Ride Time </th>
+                    <th> Manage Ride</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
     
     <script>
         function openNav() {
