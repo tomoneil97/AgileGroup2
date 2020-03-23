@@ -152,6 +152,7 @@
                         var distance = element.distance.text;
                         var duration = element.duration.text;
                         durationValue = element.duration.value;
+                        
                         window.value = duration;
                         document.getElementById("time").innerHTML = "Estimated Time: " + duration;
                     }
