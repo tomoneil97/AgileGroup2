@@ -14,7 +14,7 @@
     </style>
 </head>
 
-<body>
+<body onload="document.getElementById('destinationModal').style.display='block'">
     <div>
         <nav class="topbar">
             <input type="image" src="images/user.png" alt="icon" class="userIcon" onclick="openNav()">
@@ -82,7 +82,7 @@
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = {
+                    pos = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
@@ -90,7 +90,7 @@
                     infoWindow.setPosition(pos);
                     infoWindow.setContent('Current Location');
                     infoWindow.open(map);
-                    calculateAndDisplayRoute(directionsService, directionsRenderer, pos, matrixService);
+                    //calculateAndDisplayRoute(directionsService, directionsRenderer, matrixService);
                     //map.setCenter(pos);
                 }, function () {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -100,6 +100,14 @@
                 handleLocationError(false, infoWindow, map.getCenter());
             }
 
+            
+        var closeBtn = document.getElementById("closeBtn");
+
+        closeBtn.onclick = function () {
+            
+            calculateAndDisplayRoute(directionsService, directionsRenderer, matrixService);
+            document.getElementById('destinationModal').style.display='none';
+        }
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -112,12 +120,14 @@
 
         };
 
-        function calculateAndDisplayRoute(directionsService, directionsRenderer, pos, matrixService) {
-
+        function calculateAndDisplayRoute(directionsService, directionsRenderer, matrixService) {
+             
+            var dest = document.getElementById("destination").value;
+            
             directionsService.route(
                 {
                     origin: pos,
-                    destination: { lat: 53.77, lng: -0.366643 },
+                    destination: dest,
                     travelMode: 'DRIVING'
                 },
                 function (response, status) {
@@ -131,7 +141,7 @@
             matrixService.getDistanceMatrix(
                 {
                     origins: [pos],
-                    destinations: [{ lat: 53.77, lng: -0.366643 }],
+                    destinations: [destination],
                     travelMode: 'DRIVING'
                 }, callback);
 
@@ -188,6 +198,19 @@
 
     </div>
 
+    <div id="destinationModal" class="modal">
+        <div class ="modal-content">
+            <h1> Select a location</h1>
+            <select id="destination">
+                <option value="53.7696187, -0.3682079">Front Entrance</option>
+                <option value="53.7700431, -0.3653883">Salmon Grove</option>
+                <option value="53.771319, -0.3726109">Westfield Court</option>
+                <option value="53.7739858, -0.3685683">Sport Centre</option>
+            </select>
+            <button id="closeBtn">Okay</button>
+        </div>
+
+    </div>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -210,6 +233,10 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
+
+        
+
+
         // When the user clicks the button, open the modal
         btn.onclick = function () {
            // GetArrivalTime();
@@ -231,6 +258,8 @@
                 modal.style.display = "none";
             }
         }
+
+
 
     </script>
 </body>
