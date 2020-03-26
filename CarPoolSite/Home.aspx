@@ -141,7 +141,7 @@
             matrixService.getDistanceMatrix(
                 {
                     origins: [pos],
-                    destinations: [destination],
+                    destinations: [dest],
                     travelMode: 'DRIVING'
                 }, callback);
 

@@ -10,7 +10,7 @@
 
      <div id="id01" class="modal">
          
-        <form class="modal-content animate" >
+        <form class="modal-content animate" action="">
             <div class="imgcontainer">
                 <span onclick="location.href = 'Index.html'" class="close" title="Return">&times;</span>
                 <h1> Register </h1>
@@ -31,10 +31,10 @@
                 </select>
 
                  <label class="login"> Would you like to register as a driver?: </label>
-                <input id="box" type="checkbox" checked="checked" name="driver" onclick="driver()"/>
+                <input id="box" type="checkbox" checked="checked" name="driver" onclick="()"/>
                
                 
-                <button type="submit">Login</button>
+                <input type="submit" id="submitBtn" value="Next" />
                 
             </div>
 
@@ -73,7 +73,12 @@
             $(".upload-button").on('click', function() {
                $(".file-upload").click();
             });
-        });
+         });
+
+
+         document.getElementById("submitBtn").addEventListener("click", function(){
+    
+        }); 
 
     </script>
 
