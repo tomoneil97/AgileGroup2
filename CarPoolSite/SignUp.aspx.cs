@@ -8,10 +8,11 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web.UI.HtmlControls;
 
 public partial class SignUp :  System.Web.UI.Page
 {
-    public int newUserId;
+    public User newUser;
     protected void Page_Load(object sender, EventArgs e)
     {
         string userName = Request.Form["uname"];
@@ -20,12 +21,32 @@ public partial class SignUp :  System.Web.UI.Page
         string surName = Request.Form["surname"];
         string gender = Request.Form["gender"];
 
-        User newUser = new User(userName, passWord, foreName, surName, gender);
-        newUserId = newUser.ID;
-    }
-
-    protected void btnUpload_Click(object sender, EventArgs e)
-    {
+        
+        newUser = new User(userName, passWord, foreName, surName, gender);
         
     }
+
+
+    protected void Upload(object sender, EventArgs e)
+    {
+        if (FileUpload1.HasFile)
+        {
+            string fileName = newUser.ID.ToString() + Path.GetExtension(FileUpload1.PostedFile.FileName);
+
+            FileUpload1.PostedFile.SaveAs(Server.MapPath("~/images/") + fileName);
+            //Response.Redirect(Request.Url.AbsoluteUri);
+        }
+    }
+
+    protected void CreateAccount(object sender, EventArgs e)
+    {
+        if (File.Exists(Server.MapPath("~/image/") + newUser.ID +".*"))
+        {
+            string jke = "asd";
+        }
+        string usercourse = Request.Form["course"];
+        string Driver = Request.Form["driverCheck"];
+        newUser.COURSE = usercourse;
+    }
+
 }

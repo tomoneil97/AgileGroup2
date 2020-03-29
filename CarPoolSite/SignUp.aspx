@@ -13,31 +13,42 @@
 
      <div id="id01" class="modal">
          
-        <form class="modal-content animate" action="">
+        <form class="modal-content animate" runat="server">
             <div class="imgcontainer">
                 <span onclick="location.href = 'Index.html'" class="close" title="Return">&times;</span>
                 <h1> Register </h1>
                 <div>
                      
-                </div>
-               
-                <label><b>Upload Image</b></label>
-                <i class="fa fa-camera upload-button"></i>
-                    <input id="btnUpload" onclick="btnUpload_Click" class="file-upload" type="file" accept="image/*"/>
             </div>
+               
+            <label><b>Upload Image</b></label>
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+            <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" />
+            <hr />
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" ShowHeader="false">
+                <Columns>
+                    <asp:BoundField DataField="Text" />
+                    <asp:ImageField DataImageUrlField="Value" ControlStyle-Height="100" ControlStyle-Width="100" />
+                </Columns>
+            </asp:GridView>
+          
             <label class="login">Course: </label>
             <div class="container">
                 <select class="login" name="course">
-                    <option value="male">Computer Science</option>
-                    <option value="female">Maths</option>
-                    <option value="other">Electronic Engineering</option>
+                    <option value="Accounting">Accounting</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Electronic Engineering">Electronic Engineering</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Law">Law</option>
+                    
                 </select>
 
-                 <label class="login"> Would you like to register as a driver?: </label>
-                <input id="box" type="checkbox" checked="checked" name="driver" onclick="()"/>
+                <label class="login"> Would you like to register as a driver?: </label>
+                <input id="box" type="checkbox" checked="checked" name="driverCheck"/>
                
                 
-                <input type="submit" id="submitBtn" value="Next" />
+                <asp:Button ID="nextBtn" runat="server" Text="Next" OnClick="CreateAccount" />
                 
             </div>
 
@@ -49,9 +60,9 @@
     
      <script>
 
-        window.onbeforeunload = function (e) {
-          return 'Are you sure?';
-         };
+        //window.onbeforeunload = function (e) {
+        //  return 'Are you sure?';
+        // };
 
          $(document).ready(function() {
 
