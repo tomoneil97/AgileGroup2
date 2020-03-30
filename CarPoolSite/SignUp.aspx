@@ -16,12 +16,13 @@
         <form class="modal-content animate" runat="server">
             <div class="imgcontainer">
                 <span onclick="location.href = 'Index.html'" class="close" title="Return">&times;</span>
-                <h1> Register </h1>
+                <h1> Profile Image </h1>
                 <div>
                      
             </div>
                
             <label><b>Upload Image</b></label>
+            <asp:Image ID="Image1" runat="server" Height = "100" Width = "100" />
             <asp:FileUpload ID="FileUpload1" runat="server" />
             <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" />
             <hr />
@@ -32,23 +33,10 @@
                 </Columns>
             </asp:GridView>
           
-            <label class="login">Course: </label>
-            <div class="container">
-                <select class="login" name="course">
-                    <option value="Accounting">Accounting</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Electronic Engineering">Electronic Engineering</option>
-                    <option value="Maths">Maths</option>
-                    <option value="Law">Law</option>
-                    
-                </select>
-
-                <label class="login"> Would you like to register as a driver?: </label>
-                <input id="box" type="checkbox" checked="checked" name="driverCheck"/>
+           
                
                 
-                <asp:Button ID="nextBtn" runat="server" Text="Next" OnClick="CreateAccount" />
+                <asp:Button ID="nextBtn" runat="server" Text="Next" />
                 
             </div>
 

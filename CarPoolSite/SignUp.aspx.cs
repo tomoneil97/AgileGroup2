@@ -9,6 +9,7 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.UI.HtmlControls;
+using System.Data;
 
 public partial class SignUp :  System.Web.UI.Page
 {
@@ -23,7 +24,22 @@ public partial class SignUp :  System.Web.UI.Page
 
         
         newUser = new User(userName, passWord, foreName, surName, gender);
-        
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\harve\Documents\GitHub\AgileGroup2\CarPoolSite\App_Data\Database.mdf; Integrated Security = True";
+        conn.Open();
+        string sql = "INSERT INTO dbo.CARPOOLUSER ([Username],[Password],[FirstName],[Surname],[Gender],[Image],[CourseName],[isDriver]) values (@uname,@pword,@fname,@sname,@gnder,@image,@crse,@drvr)";
+        using(SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", userName);
+            cmd.Parameters.AddWithValue("@pword", passWord);
+            cmd.Parameters.AddWithValue("@fname", foreName);
+            cmd.Parameters.AddWithValue("@sname", surName);
+            cmd.Parameters.AddWithValue("@gnder", gender);
+            cmd.Parameters.Add("@image", SqlDbType.VarBinary).Value = DBNull.Value;
+            cmd.Parameters.AddWithValue("@crse", DBNull.Value);
+            cmd.Parameters.AddWithValue("@drvr", 0);
+            cmd.ExecuteNonQuery();
+        }
     }
 
 
@@ -31,22 +47,15 @@ public partial class SignUp :  System.Web.UI.Page
     {
         if (FileUpload1.HasFile)
         {
-            string fileName = newUser.ID.ToString() + Path.GetExtension(FileUpload1.PostedFile.FileName);
-
-            FileUpload1.PostedFile.SaveAs(Server.MapPath("~/images/") + fileName);
+            string fileName = newUser.USERNAME.ToString() + Path.GetExtension(FileUpload1.PostedFile.FileName);
+            string path = Server.MapPath("~/images/") + fileName;
+            FileUpload1.PostedFile.SaveAs(path);
+            
+            Image1.ImageUrl = path;
             //Response.Redirect(Request.Url.AbsoluteUri);
         }
     }
 
-    protected void CreateAccount(object sender, EventArgs e)
-    {
-        if (File.Exists(Server.MapPath("~/image/") + newUser.ID +".*"))
-        {
-            string jke = "asd";
-        }
-        string usercourse = Request.Form["course"];
-        string Driver = Request.Form["driverCheck"];
-        newUser.COURSE = usercourse;
-    }
+    
 
 }
