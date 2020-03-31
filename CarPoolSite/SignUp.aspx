@@ -22,21 +22,19 @@
             </div>
                
             <label><b>Upload Image</b></label>
-            <asp:Image ID="Image1" runat="server" Height = "100" Width = "100" />
-            <asp:FileUpload ID="FileUpload1" runat="server" />
-            <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="Upload" />
-            <hr />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" ShowHeader="false">
-                <Columns>
-                    <asp:BoundField DataField="Text" />
-                    <asp:ImageField DataImageUrlField="Value" ControlStyle-Height="100" ControlStyle-Width="100" />
-                </Columns>
-            </asp:GridView>
           
-           
-               
+                <input type="file" id="filetag" accept="image/x-png,image/jpeg"/>
+                <img style="border-radius:50%;" src="" id="preview" height="200" width="200"/>
                 
-                <asp:Button ID="nextBtn" runat="server" Text="Next" />
+            
+            
+            <hr />
+           
+          <label><b>Would you like to register as a driver?</b></label>
+           <input type="checkbox" id="isDriver" value="driver" />
+               
+                <br />
+            <asp:Button ID="btnUpload" runat="server" Text="Next" OnClick="Upload" />
                 
             </div>
 
@@ -48,39 +46,30 @@
     
      <script>
 
-        //window.onbeforeunload = function (e) {
-        //  return 'Are you sure?';
-        // };
+       
 
-         $(document).ready(function() {
-
+          var fileTag = document.getElementById("filetag"),
+            preview = document.getElementById("preview");
     
-        var readURL = function(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+        fileTag.addEventListener("change", function() {
+          changeImage(this);
+        });
 
-                    reader.onload = function (e) {
-                        $('.profile-pic').attr('src', e.target.result);
-                    }
-    
-                    reader.readAsDataURL(input.files[0]);
-                }
+        function changeImage(input) {
+          var reader;
+
+          if (input.files && input.files[0]) {
+            reader = new FileReader();
+
+            reader.onload = function(e) {
+              preview.setAttribute('src', e.target.result);
             }
-    
 
-            $(".file-upload").on('change', function(){
-                readURL(this);
-            });
-    
-            $(".upload-button").on('click', function() {
-               $(".file-upload").click();
-            });
-         });
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
 
-
-         document.getElementById("submitBtn").addEventListener("click", function(){
-    
-        }); 
+         
 
     </script>
 

@@ -17,6 +17,10 @@ public partial class SignUp :  System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         string userName = Request.Form["uname"];
+        if(userName == null)
+        {
+            return;
+        }
         string passWord = Request.Form["psw"];
         string foreName = Request.Form["forename"];
         string surName = Request.Form["surname"];
@@ -45,15 +49,7 @@ public partial class SignUp :  System.Web.UI.Page
 
     protected void Upload(object sender, EventArgs e)
     {
-        if (FileUpload1.HasFile)
-        {
-            string fileName = newUser.USERNAME.ToString() + Path.GetExtension(FileUpload1.PostedFile.FileName);
-            string path = Server.MapPath("~/images/") + fileName;
-            FileUpload1.PostedFile.SaveAs(path);
-            
-            Image1.ImageUrl = path;
-            //Response.Redirect(Request.Url.AbsoluteUri);
-        }
+        
     }
 
     
