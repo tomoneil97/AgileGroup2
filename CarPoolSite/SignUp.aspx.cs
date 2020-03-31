@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.UI.HtmlControls;
 using System.Data;
+using System.Reflection;
 
 public partial class SignUp :  System.Web.UI.Page
 {
@@ -21,15 +22,24 @@ public partial class SignUp :  System.Web.UI.Page
         {
             return;
         }
+        else
+        {
+            Response.Cookies["cookie"].Value = userName;
+            Response.Cookies["cookie"].Expires = DateTime.Now.AddMinutes(10);
+        }
+        
+        
+
         string passWord = Request.Form["psw"];
         string foreName = Request.Form["forename"];
         string surName = Request.Form["surname"];
         string gender = Request.Form["gender"];
-
+        
         
         newUser = new User(userName, passWord, foreName, surName, gender);
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
-        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\harve\Documents\GitHub\AgileGroup2\CarPoolSite\App_Data\Database.mdf; Integrated Security = True";
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
         string sql = "INSERT INTO dbo.CARPOOLUSER ([Username],[Password],[FirstName],[Surname],[Gender],[Image],[CourseName],[isDriver]) values (@uname,@pword,@fname,@sname,@gnder,@image,@crse,@drvr)";
         using(SqlCommand cmd = new SqlCommand(sql, conn))
@@ -49,7 +59,27 @@ public partial class SignUp :  System.Web.UI.Page
 
     protected void Upload(object sender, EventArgs e)
     {
+        Image profileImage = (Image)FindControl("preview");
         
+        
+        string username = "";
+        if (Request.Cookies["cookie"] != null)
+        {
+            username = Request.Cookies["cookie"].Value;
+        }
+
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "+localPath+"; Integrated Security = True";
+        conn.Open();
+        string sql = "UPDATE CARPOOLUSER SET [Image] = @img WHERE [Username] = @uname";
+        using(SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@image", profileImage.);
+            cmd.ExecuteNonQuery();
+        }
+        Response.Redirect("Home.aspx");
     }
 
     

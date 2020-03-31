@@ -14,15 +14,5 @@ public partial class Register : System.Web.UI.Page
 
     }
 
-    protected void CreateAccount(object sender, EventArgs e)
-    {
-        User newUser;
-        if (File.Exists(Server.MapPath("~/image/") + "jke" + ".*"))
-        {
-            string jke = "asd";
-        }
-        string usercourse = Request.Form["course"];
-        string Driver = Request.Form["driverCheck"];
-        
-    }
+ 
 }

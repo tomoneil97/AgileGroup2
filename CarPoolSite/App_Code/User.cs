@@ -82,8 +82,8 @@ public class User
     {
         Random rnd = new Random();
         ID = rnd.Next(0, 999999);
-        USERNAME = username;
-        PASSWORD = password;
+        USERNAME = Username;
+        PASSWORD = Password;
         FNAME = Firstname;
         SNAME = Surname;
         GENDER = Gender;

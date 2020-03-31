@@ -24,8 +24,8 @@
             <label><b>Upload Image</b></label>
           
                 <input type="file" id="filetag" accept="image/x-png,image/jpeg"/>
-                <img style="border-radius:50%;" src="" id="preview" height="200" width="200"/>
                 
+                <asp:Image runat="server" ID="preview" src ="" style="border-radius:50%;" height="200" width="200" />
             
             
             <hr />
