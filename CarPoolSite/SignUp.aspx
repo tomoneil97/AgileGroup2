@@ -23,7 +23,7 @@
                
             <label><b>Upload Image</b></label>
           
-                <input type="file" id="filetag" accept="image/x-png,image/jpeg"/>
+                <input type="file" name="filetag" id="filetag" accept="image/x-png,image/jpeg" runat="server"/>
                 
                 <asp:Image runat="server" ID="preview" src ="" style="border-radius:50%;" height="200" width="200" />
             

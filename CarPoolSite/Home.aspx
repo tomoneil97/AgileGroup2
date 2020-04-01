@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="_Default" %>
+
+<!DOCTYPE html>
 <html>
 <head>
      <link rel="stylesheet" href="css/site.css">
@@ -17,7 +19,8 @@
 <body onload="document.getElementById('destinationModal').style.display='block'">
     <div>
         <nav class="topbar">
-            <input type="image" src="images/user.png" alt="icon" class="userIcon" onclick="openNav()">
+            
+            <input type="image" src="<%=img %>" alt="icon" class="userIcon" onclick="openNav()">
         </nav>
     </div>
     
