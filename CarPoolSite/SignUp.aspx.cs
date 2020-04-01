@@ -41,7 +41,7 @@ public partial class SignUp :  System.Web.UI.Page
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
-        string sql = "INSERT INTO dbo.CARPOOLUSER ([Username],[Password],[FirstName],[Surname],[Gender],[Image],[CourseName],[isDriver]) values (@uname,@pword,@fname,@sname,@gnder,@image,@crse,@drvr)";
+        string sql = "INSERT INTO dbo.CARPOOLUSER ([Username],[Password],[FirstName],[Surname],[Gender],[ImageName],[CourseName],[isDriver]) values (@uname,@pword,@fname,@sname,@gnder,@image,@crse,@drvr)";
         using(SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", userName);
@@ -49,7 +49,7 @@ public partial class SignUp :  System.Web.UI.Page
             cmd.Parameters.AddWithValue("@fname", foreName);
             cmd.Parameters.AddWithValue("@sname", surName);
             cmd.Parameters.AddWithValue("@gnder", gender);
-            cmd.Parameters.Add("@image", SqlDbType.VarBinary).Value = DBNull.Value;
+            cmd.Parameters.AddWithValue("@image", DBNull.Value);
             cmd.Parameters.AddWithValue("@crse", DBNull.Value);
             cmd.Parameters.AddWithValue("@drvr", 0);
             cmd.ExecuteNonQuery();
@@ -59,27 +59,52 @@ public partial class SignUp :  System.Web.UI.Page
 
     protected void Upload(object sender, EventArgs e)
     {
-        Image profileImage = (Image)FindControl("preview");
-        
-        
         string username = "";
         if (Request.Cookies["cookie"] != null)
         {
             username = Request.Cookies["cookie"].Value;
         }
 
+        Image profileImage = (Image)FindControl("preview");
+
+        HttpPostedFile postedFile = Request.Files["filetag"];
+        string filePath = "";
+        string imageName = "";
+        if (postedFile != null && postedFile.ContentLength > 0)
+        {
+            //Save the File.
+            filePath = Server.MapPath("~/images/usericons/") + username+ Path.GetExtension(postedFile.FileName);
+            postedFile.SaveAs(filePath);
+            imageName = "images/usericons/" + username + Path.GetExtension(postedFile.FileName);
+        }
+        int isDriver = 0;
+        string driver = Request.Form["isDriver"];
+        if(driver == "on")
+        {
+            isDriver = 1;
+        }
+
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
-        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "+localPath+"; Integrated Security = True";
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
-        string sql = "UPDATE CARPOOLUSER SET [Image] = @img WHERE [Username] = @uname";
-        using(SqlCommand cmd = new SqlCommand(sql, conn))
+        string sql = "UPDATE dbo.CARPOOLUSER SET [isDriver] = @drv, [ImageName] = @img WHERE [Username] = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
+            cmd.Parameters.AddWithValue("@drv", isDriver);
+            cmd.Parameters.AddWithValue("@img", imageName);
             cmd.Parameters.AddWithValue("@uname", username);
-            cmd.Parameters.AddWithValue("@image", profileImage.);
+<<<<<<< HEAD
+            cmd.Parameters.AddWithValue("@image", profileImage);
+=======
+>>>>>>> 6483acc1cb702a372610ee15d49ea6ecc80ac5ef
             cmd.ExecuteNonQuery();
         }
-        Response.Redirect("Home.aspx");
+
+
+
+
+            Response.Redirect("Default.aspx");
     }
 
     
