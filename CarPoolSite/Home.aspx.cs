@@ -18,7 +18,7 @@ public partial class _Default : System.Web.UI.Page
     public void getProfileImage()
     {
         
-        string username = "";
+            string username = "";
         if (Request.Cookies["user"] != null)
         {
             username = Request.Cookies["user"].Value;

@@ -32,6 +32,7 @@ public partial class _Default : System.Web.UI.Page
 
     public bool Logon(string username, string password)
     {
+        password = Encryption.Encrypt(password);
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";

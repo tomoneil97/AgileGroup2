@@ -29,9 +29,16 @@
             
             
             <hr />
+
+                <label><b>Course: </b></label>
+                <select class="login" name="course">
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Maths">Maths</option>
+                    <option value="English">English</option>
+                </select> <br />
            
           <label><b>Would you like to register as a driver?</b></label>
-           <input type="checkbox" id="isDriver" value="driver" />
+           <input type="checkbox" name="isDriver" id="isDriver" />
                
                 <br />
             <asp:Button ID="btnUpload" runat="server" Text="Next" OnClick="Upload" />

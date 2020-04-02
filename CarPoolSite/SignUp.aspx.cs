@@ -21,6 +21,7 @@ public partial class SignUp :  System.Web.UI.Page
         if(userName == null)
         {
             return;
+            
         }
         else
         {
@@ -34,8 +35,9 @@ public partial class SignUp :  System.Web.UI.Page
         string foreName = Request.Form["forename"];
         string surName = Request.Form["surname"];
         string gender = Request.Form["gender"];
-        
-        
+
+        passWord = Encryption.Encrypt(passWord);
+
         newUser = new User(userName, passWord, foreName, surName, gender);
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
@@ -64,6 +66,10 @@ public partial class SignUp :  System.Web.UI.Page
         {
             username = Request.Cookies["cookie"].Value;
         }
+        else
+        {
+            Response.Redirect("Default.aspx");
+        }
 
         Image profileImage = (Image)FindControl("preview");
 
@@ -84,23 +90,35 @@ public partial class SignUp :  System.Web.UI.Page
             isDriver = 1;
         }
 
+        string course = Request.Form["course"];
+
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
-        string sql = "UPDATE dbo.CARPOOLUSER SET [isDriver] = @drv, [ImageName] = @img WHERE [Username] = @uname";
+        string sql = "UPDATE dbo.CARPOOLUSER SET [CourseName] = @crs , [isDriver] = @drv, [ImageName] = @img WHERE [Username] = @uname";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
+            cmd.Parameters.AddWithValue("@crs", course);
             cmd.Parameters.AddWithValue("@drv", isDriver);
             cmd.Parameters.AddWithValue("@img", imageName);
             cmd.Parameters.AddWithValue("@uname", username);
             cmd.ExecuteNonQuery();
         }
 
-
-
-
+        if(driver == "on")
+        {
+            Response.Redirect("AddVehicle.aspx");
+        }
+        else
+        {
+            Response.Cookies["cookie"].Expires = DateTime.Now.AddDays(-10);
+            Response.Cookies["cookie"].Value = null;
             Response.Redirect("Default.aspx");
+        }
+
+
+            
     }
 
     
