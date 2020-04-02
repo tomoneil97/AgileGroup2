@@ -103,6 +103,7 @@ public partial class SignUp :  System.Web.UI.Page
             cmd.Parameters.AddWithValue("@drv", isDriver);
             cmd.Parameters.AddWithValue("@img", imageName);
             cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@image", profileImage);
             cmd.ExecuteNonQuery();
         }
 
