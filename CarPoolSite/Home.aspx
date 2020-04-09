@@ -27,7 +27,7 @@
 
     <div id="mySidenav" class="sidenav">
         <a href="Home.aspx">Home</a>
-        <a asp-page="./Profile">Profile</a>
+        <a href="ProfilePage.aspx">Profile</a>
         <a href="MyRides.aspx">My Rides</a>
         <a asp-page="./Settings">Settings</a>
         <a asp-page="./Privacy">Privacy</a>
@@ -114,6 +114,10 @@
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+            var noGPS = document.getElementById("noGPS");
+            noGPS.style.display = "block";
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
                 'Error: The Geolocation service failed.' :
@@ -222,6 +226,17 @@
             <p> Your destination is:</p>
             <br />
             <label id="arrival"> Arriving by: </label>
+
+        </div>
+    </div>
+
+    <div id="noGPS" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>This site requires Geolocation!</p>
+            <p> Please enable Location services</p>
+            <br />
+           
 
         </div>
     </div>

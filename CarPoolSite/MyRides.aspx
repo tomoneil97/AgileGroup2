@@ -17,7 +17,7 @@
 
     <div id="mySidenav" class="sidenav">
         <a href="Home.aspx">Home</a>
-        <a asp-page="./Profile">Profile</a>
+        <a href="ProfilePage.aspx">Profile</a>
         <a href="MyRides.aspx">My Rides</a>
         <a asp-page="./Settings">Settings</a>
         <a asp-page="./Privacy">Privacy</a>

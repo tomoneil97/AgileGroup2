@@ -31,6 +31,7 @@ public partial class AddVehicle : System.Web.UI.Page
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
         string sql = "INSERT INTO dbo.VEHICLE ([Username],[Make],[Model],[RegNum],[NumOfSeats]) values (@uname,@make,@model,@reg,@seats)";
+
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
