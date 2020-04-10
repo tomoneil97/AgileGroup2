@@ -15,7 +15,7 @@
          
         <form class="modal-content animate" runat="server">
             <div class="imgcontainer">
-                <span onclick="location.href = 'Index.html'" class="close" title="Return">&times;</span>
+                <span onclick="location.href = 'Default.aspx'" class="close" title="Return">&times;</span>
                 <h1> Profile Image </h1>
                 <div>
                      

@@ -22,11 +22,11 @@
         <a asp-page="./Settings">Settings</a>
         <a asp-page="./Privacy">Privacy</a>
         <a asp-page="./Contact">Contact</a>
-
+        </div>
     
     <div class="menu">
     <form id="form1" runat="server">
-        </div>
+        
              <label><b>Change Profile Image</b></label>
             <input type="file" name="filetag" id="filetag" accept="image/x-png,image/jpeg" runat="server"/>
                 
@@ -34,7 +34,9 @@
             <img id="preview" src="<%=img %>" style="border-radius:50%;" height="200" width="200">
 
             <hr />
+            <label class="login">Course: </label>
             <select class="login" name="course">
+                    <option value="null"></option>
                     <option value="Computer Science">Computer Science</option>
                     <option value="Maths">Maths</option>
                     <option value="English">English</option>
@@ -46,18 +48,27 @@
                 <input class="login" type="text" name="surname" placeholder="Enter Surname" />
                 <label class="login">Gender: </label>
                 <select class="login" name="gender">
+                    <option value="null"></option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select> <br />
-         <asp:Button ID="Button1" runat="server" Text="Update Profile" OnClick="Update" />
         <hr />
-        
+        <label class="login" for="psw"><b>Please enter your password to update profile or become a driver</b></label>
+                <input class="login" type="password" placeholder="Enter Password" name="psw" required>
+         
+        <hr />
+        <label><b>Update Profile</b></label>
+        <asp:Button ID="Button1" runat="server" Text="Update Profile" OnClick="Update" />
+        <br />
+        <div id="driverdiv" runat="server">
             <label><b>Register as a Driver?</b></label>
             <asp:Button ID="btnDriver" runat="server" Text="Register" OnClick="DriverRegBtn" />
         </div>
-    </form>
+            
         
+    </form>
+     </div>   
         
         
         
