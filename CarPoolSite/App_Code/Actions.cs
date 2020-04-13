@@ -5,7 +5,7 @@ using System.Web;
 using System.IO;
 using System.Data.SqlClient;
 /// <summary>
-/// Summary description for Actions
+/// Class for actions to perform on webpages
 /// </summary>
 public class Actions
 {
@@ -57,7 +57,15 @@ public class Actions
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
-            return cmd.ExecuteScalar()?.ToString();
+            string image= cmd.ExecuteScalar()?.ToString();
+            if(image == "")
+            {
+                return "images/user.png";
+            }
+            else
+            {
+                return image;
+            }
         }
     }
 
@@ -77,5 +85,30 @@ public class Actions
             string result = cmd.ExecuteScalar()?.ToString();
             return result;
         }
+    }
+
+    public static List<string> Notifications(string username)
+    {
+        List<string> notifs = new List<string>();
+
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "SELECT [Message] FROM dbo.NOTIFICATION WHERE [Recipient] = @uname AND [Read] = @f";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@f", false);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    notifs.Add(reader.GetString(0));
+                }
+            }
+        }
+        return notifs;
     }
 }

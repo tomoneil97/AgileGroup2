@@ -14,6 +14,7 @@
             position:absolute;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body onload="document.getElementById('destinationModal').style.display='block'">
@@ -21,11 +22,19 @@
         <nav class="topbar">
             
             <input type="image" src="<%=img %>" alt="icon" class="userIcon" onclick="openNav()">
+
+             <a href="#" class="notification">
+                <span>Inbox</span>
+                 <div id="notifDiv" runat="server">
+                     <span class="badge"><% =notifNum %></span>
+                 </div>
+            </a> 
         </nav>
     </div>
     
 
     <div id="mySidenav" class="sidenav">
+        <br />
         <a href="Home.aspx">Home</a>
         <a href="ProfilePage.aspx">Profile</a>
         <a href="MyRides.aspx">My Rides</a>
@@ -194,14 +203,16 @@
 
 
     <div class="request">
-
-        <label id="time">Estimated Time: </label>
+        <div id="riderView" runat="server">
+            <label id="time">Estimated Time: </label>
         <br />
         <label id="cost">Estimated Price</label>
 
         <button id="requestBtn" class="request"><b>Request Ride</b></button>
         <br />
         <img src="images/powered_by_google_on_non_white.png" />
+        </div>
+        
 
     </div>
 
