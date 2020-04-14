@@ -180,7 +180,10 @@
                         durationValue = element.duration.value;
                         
                         window.value = duration;
+                        
+                        priceperMin = 0.25;
                         document.getElementById("time").innerHTML = "Estimated Time: " + duration;
+                        document.getElementById("cost").innerHTML = "Estimated Price: £" + ((element.duration.value/60) * priceperMin).toFixed(2);
                     }
                 }
             }
@@ -206,7 +209,7 @@
         <div id="riderView" runat="server">
             <label id="time">Estimated Time: </label>
         <br />
-        <label id="cost">Estimated Price</label>
+        <label id="cost">Estimated Price: </label>
 
         <button id="requestBtn" class="request"><b>Request Ride</b></button>
         <br />
