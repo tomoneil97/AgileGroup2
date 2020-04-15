@@ -14,7 +14,10 @@
             position:absolute;
         }
     </style>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+        </script>
 </head>
 
 <body onload="document.getElementById('destinationModal').style.display='block'">
@@ -139,7 +142,8 @@
         function calculateAndDisplayRoute(directionsService, directionsRenderer, matrixService) {
              
             var dest = document.getElementById("destination").value;
-            
+            var sel = document.getElementById("destination");
+             place = sel.options[sel.selectedIndex].text;
             directionsService.route(
                 {
                     origin: pos,
@@ -211,6 +215,7 @@
         <br />
         <label id="cost">Estimated Price: </label>
 
+
         <button id="requestBtn" class="request"><b>Request Ride</b></button>
         <br />
         <img src="images/powered_by_google_on_non_white.png" />
@@ -223,10 +228,10 @@
         <div class ="modal-content">
             <h1> Select a location</h1>
             <select id="destination">
-                <option value="53.7696187, -0.3682079">Front Entrance</option>
-                <option value="53.7700431, -0.3653883">Salmon Grove</option>
-                <option value="53.771319, -0.3726109">Westfield Court</option>
-                <option value="53.7739858, -0.3685683">Sport Centre</option>
+                <option value="53.7696187, -0.3682079" >Front Entrance</option>
+                <option value="53.7700431, -0.3653883" >Salmon Grove</option>
+                <option value="53.771319, -0.3726109"  >Westfield Court</option>
+                <option value="53.7739858, -0.3685683" >Sport Centre</option>
             </select>
             <button id="closeBtn">Okay</button>
         </div>
@@ -237,10 +242,14 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Ride Requested!</p>
-            <p> Your destination is:</p>
+            <p> <label id="dest"> Your destination is: </label></p>
             <br />
             <label id="arrival"> Arriving by: </label>
-
+            <form id=" frm" method="post">
+                <div id="Content">
+    </div>
+            </form>
+    
         </div>
     </div>
 
@@ -276,6 +285,24 @@
             var currentDate = new Date();
             var arrivalTime = new Date(currentDate.getTime() + (durationValue * 1000));
             document.getElementById("arrival").innerHTML = "Arriving by: " + arrivalTime;
+            document.getElementById("dest").innerHTML = "Your destination is: " + place;
+
+            $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/requestRide",  
+                 contentType: "application/json; charset=utf-8",  
+                 dataType: "json",  
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+             });  
+         });  
+
+
             modal.style.display = "block";
         }
 
