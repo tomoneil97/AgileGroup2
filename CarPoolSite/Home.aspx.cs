@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -34,5 +35,10 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
+    [WebMethod]
+    public static string requestRide()
+    {
+        return "This string is from Code behind";
+    }
     
 }
