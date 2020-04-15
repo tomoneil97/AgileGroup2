@@ -14,6 +14,7 @@
             position:absolute;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body onload="document.getElementById('destinationModal').style.display='block'">
@@ -21,13 +22,21 @@
         <nav class="topbar">
             
             <input type="image" src="<%=img %>" alt="icon" class="userIcon" onclick="openNav()">
+
+             <a href="#" class="notification">
+                <span>Inbox</span>
+                 <div id="notifDiv" runat="server">
+                     <span class="badge"><% =notifNum %></span>
+                 </div>
+            </a> 
         </nav>
     </div>
     
 
     <div id="mySidenav" class="sidenav">
+        <br />
         <a href="Home.aspx">Home</a>
-        <a asp-page="./Profile">Profile</a>
+        <a href="ProfilePage.aspx">Profile</a>
         <a href="MyRides.aspx">My Rides</a>
         <a asp-page="./Settings">Settings</a>
         <a asp-page="./Privacy">Privacy</a>
@@ -114,6 +123,10 @@
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+            var noGPS = document.getElementById("noGPS");
+            noGPS.style.display = "block";
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
                 'Error: The Geolocation service failed.' :
@@ -167,7 +180,10 @@
                         durationValue = element.duration.value;
                         
                         window.value = duration;
+                        
+                        priceperMin = 0.25;
                         document.getElementById("time").innerHTML = "Estimated Time: " + duration;
+                        document.getElementById("cost").innerHTML = "Estimated Price: £" + ((element.duration.value/60) * priceperMin).toFixed(2);
                     }
                 }
             }
@@ -190,14 +206,16 @@
 
 
     <div class="request">
-
-        <label id="time">Estimated Time: </label>
+        <div id="riderView" runat="server">
+            <label id="time">Estimated Time: </label>
         <br />
-        <label id="cost">Estimated Price</label>
+        <label id="cost">Estimated Price: </label>
 
         <button id="requestBtn" class="request"><b>Request Ride</b></button>
         <br />
         <img src="images/powered_by_google_on_non_white.png" />
+        </div>
+        
 
     </div>
 
@@ -222,6 +240,17 @@
             <p> Your destination is:</p>
             <br />
             <label id="arrival"> Arriving by: </label>
+
+        </div>
+    </div>
+
+    <div id="noGPS" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>This site requires Geolocation!</p>
+            <p> Please enable Location services</p>
+            <br />
+           
 
         </div>
     </div>

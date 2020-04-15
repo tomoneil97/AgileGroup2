@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyRides.aspx.cs" Inherits="MyRides" %>
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,14 +10,14 @@
 <body>
     <div>
         <nav class="topbar">
-            <input type="image" src="images/user.png" alt="icon" class="userIcon" onclick="openNav()">
+            <input type="image" src="<%=img %>" alt="icon" class="userIcon" onclick="openNav()">
         </nav>
     </div>
     
 
     <div id="mySidenav" class="sidenav">
         <a href="Home.aspx">Home</a>
-        <a asp-page="./Profile">Profile</a>
+        <a href="ProfilePage.aspx">Profile</a>
         <a href="MyRides.aspx">My Rides</a>
         <a asp-page="./Settings">Settings</a>
         <a asp-page="./Privacy">Privacy</a>
