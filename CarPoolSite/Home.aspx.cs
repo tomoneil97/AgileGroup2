@@ -36,7 +36,7 @@ public partial class _Default : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string requestRide()
+    public static string requestRide(string Dest,string Loc)
     {
         return "This string is from Code behind";
     }
