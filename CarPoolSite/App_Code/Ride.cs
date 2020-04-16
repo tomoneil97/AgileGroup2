@@ -14,8 +14,8 @@ public class Ride
     private string username;
     private string sLocation;
     private string destination;
-    private string date;
-    private string time;
+    private string actual_arrivalTime;
+    private string predicted_arrivalTime;
 
     public int rID
     {
@@ -41,17 +41,17 @@ public class Ride
 
         set { destination = value; }
     }
-    public string rDate
+    public string r_aTime
     {
-        get { return date; }
+        get { return actual_arrivalTime; }
 
-        set { date = value; }
+        set { actual_arrivalTime = value; }
     }
-    public string rTime
+    public string r_pTime
     {
-        get { return time; }
+        get { return predicted_arrivalTime; }
 
-        set { time = value; }
+        set { predicted_arrivalTime = value; }
     }
 
     public Ride(string username, string sLocation, string destination, string date, string time)

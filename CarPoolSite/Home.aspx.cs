@@ -12,9 +12,10 @@ public partial class _Default : System.Web.UI.Page
 {
     public string img;
     public int notifNum = 0;
-    protected void Page_Load(object sender, EventArgs e)
+    public string username = "";
+    protected void Page_Load(object sender, EventArgs e) //this is the openNav 
     {
-        string username = "";
+        //string username = "";
         if (Request.Cookies["user"] != null)
         {
             username = Request.Cookies["user"].Value;
@@ -36,9 +37,26 @@ public partial class _Default : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string requestRide()
+    public static string requestRide(string origin)
     {
-        return "This string is from Code behind";
+        string sLocation = origin;
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+        string sql = "UPDATE [dbo].[RIDERS] SET  ";
+        if (sLocation != "")
+        {
+            sql += " [Location] = @sLocation,";
+        }
+        sql = sql.Remove(sql.Length - 1);
+        sql += " WHERE [Id] = @username";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@sLocation", sLocation);
+            cmd.ExecuteNonQuery();
+        }
+            return "This string is from Code behind";
     }
     
 }
