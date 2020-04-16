@@ -12,10 +12,9 @@ public partial class _Default : System.Web.UI.Page
 {
     public string img;
     public int notifNum = 0;
-    public string username = "";
     protected void Page_Load(object sender, EventArgs e) //this is the openNav 
     {
-        //string username = "";
+        string username = "";
         if (Request.Cookies["user"] != null)
         {
             username = Request.Cookies["user"].Value;
@@ -37,23 +36,25 @@ public partial class _Default : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string requestRide(string origin)
+    public static string requestRide(string Dest,string U_Loc)
     {
-        string sLocation = origin;
+        string dLocation = Dest;
+        string sLocation = U_Loc;
+        string sql;
+        string username;
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
-        string sql = "UPDATE [dbo].[RIDERS] SET  ";
-        if (sLocation != "")
-        {
-            sql += " [Location] = @sLocation,";
-        }
-        sql = sql.Remove(sql.Length - 1);
-        sql += " WHERE [Id] = @username";
-        using (SqlCommand cmd = new SqlCommand(sql, conn))
-        {
-            cmd.Parameters.AddWithValue("@sLocation", sLocation);
+
+        if (dLocation != ""){
+            //sql = "UPDATE [dbo].[RIDE] SET [Destination] = @dLocation";
+            sql = "INSERT INTO [dbo].[RIDE] ([Destination]) VALUES (@dLocation)";
+        }else return null;
+
+        using (SqlCommand cmd = new SqlCommand(sql, conn)){
+            cmd.Parameters.AddWithValue("@dLocation", dLocation);
             cmd.ExecuteNonQuery();
         }
             return "This string is from Code behind";

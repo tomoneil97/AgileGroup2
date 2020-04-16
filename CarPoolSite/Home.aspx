@@ -101,7 +101,7 @@
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-
+                    stringpos = position.coords.latitude + ", " + position.coords.longitude
                     infoWindow.setPosition(pos);
                     infoWindow.setContent('Current Location');
                     infoWindow.open(map);
@@ -287,14 +287,20 @@
             document.getElementById("arrival").innerHTML = "Arriving by: " + arrivalTime;
             document.getElementById("dest").innerHTML = "Your destination is: " + place;
 
+            var request = JSON.stringify({
+                 Dest: place, 
+                 U_Loc: stringpos
+            });
+
             $(document).ready(function () {  
              $.ajax({  
                  type: "POST",  
                  url: "Home.aspx/requestRide",  
-                 contentType: "application/json; charset=utf-8",  
-                 dataType: "json",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 data: request,
                  success: function (response) {  
-                     $("#Content").text(response.d);  
+                     $("#Content").text(msg.d);  
                  },  
                  failure: function (response) {  
                      alert(response.d);  
