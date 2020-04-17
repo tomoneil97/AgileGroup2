@@ -12,9 +12,10 @@ public partial class _Default : System.Web.UI.Page
 {
     public string img;
     public int notifNum = 0;
+    public static string username;
     protected void Page_Load(object sender, EventArgs e) //this is the openNav 
     {
-        string username = "";
+       
         if (Request.Cookies["user"] != null)
         {
             username = Request.Cookies["user"].Value;
@@ -38,26 +39,33 @@ public partial class _Default : System.Web.UI.Page
     [WebMethod]
     public static string requestRide(string Dest,string U_Loc)
     {
-        string dLocation = Dest;
-        string sLocation = U_Loc;
+        string Destination = Dest;
+        string Location = U_Loc;
         string sql;
-        string username;
+        string usern = username;
+
+        DateTime myDateTime = DateTime.Now;
+        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
 
-        if (dLocation != ""){
-            //sql = "UPDATE [dbo].[RIDE] SET [Destination] = @dLocation";
-            sql = "INSERT INTO [dbo].[RIDE] ([Destination]) VALUES (@dLocation)";
+        if (Location != ""){
+          
+            sql = "INSERT INTO [dbo].[RIDERS] ([RiderUsername],[Date],[Location],[Destination]) VALUES (@uname,@date,@loc,@dest)";
         }else return null;
 
         using (SqlCommand cmd = new SqlCommand(sql, conn)){
-            cmd.Parameters.AddWithValue("@dLocation", dLocation);
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
+            cmd.Parameters.AddWithValue("@loc", Location);
+            cmd.Parameters.AddWithValue("@dest", Destination);
             cmd.ExecuteNonQuery();
         }
-            return "This string is from Code behind";
+            return "Complete";
     }
     
 }

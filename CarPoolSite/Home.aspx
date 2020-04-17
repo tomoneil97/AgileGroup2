@@ -300,7 +300,7 @@
                  dataType: "json",
                  data: request,
                  success: function (response) {  
-                     $("#Content").text(msg.d);  
+                     $("#Content").text(response.d);  
                  },  
                  failure: function (response) {  
                      alert(response.d);  
