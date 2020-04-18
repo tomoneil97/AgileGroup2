@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,7 @@ public partial class _Default : System.Web.UI.Page
         if (Actions.isDriver(username) == "True")
         {
             riderView.Visible = false;
+            AddUserMarkers();
         }
         List<string> notifs = Actions.Notifications(username);
         if(notifs.Count == 0)
@@ -34,6 +36,46 @@ public partial class _Default : System.Web.UI.Page
         {
             notifNum = notifs.Count;
         }
+    }
+
+    public void AddUserMarkers()
+    {
+        List<Rider> riderlist = new List<Rider>();
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+        string sql = "SELECT * FROM [dbo].[RIDERS]";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+           
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    if(reader.IsDBNull(3))
+                    {
+                        Rider rider = new Rider(reader.GetString(1), reader.GetString(4), reader.GetString(6));
+                        riderlist.Add(rider);
+                    }
+                   
+                }
+            }
+        }
+        string markersString= "";
+        foreach(Rider rider in riderlist)
+        {
+            markersString += "var " + rider.name + @"= new google.maps.Marker({
+              position: " + rider.location +  @",
+              map: map,
+              title: 'Destintaion: "+rider.destination +@"'
+            });
+            ";
+
+        }
+       
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myScriptName", markersString, true);
     }
 
     [WebMethod]
