@@ -94,7 +94,7 @@
             infoWindow = new google.maps.InfoWindow;
             // The marker, positioned at Uluru
             var marker = new google.maps.Marker({ position: campus, map: map });
-
+            <% =markersString%>
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
@@ -259,9 +259,22 @@
 
     <div id="noGPS" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span  class="close">&times;</span>
             <p>This site requires Geolocation!</p>
             <p> Please enable Location services</p>
+            <br />
+           
+
+        </div>
+    </div>
+
+    <div id="rideRequest" class="modal">
+        <div class="modal-content">
+            <button id="rideClose">Close</button> <br />
+            <label id="riderDest">RIDER wants a lift!</label><br />
+            <label id="riderlocation"> Location: LATLONG</label><br />
+          <label id="riderdestination"> Destination: DESTINATION</label><br />
+            
             <br />
            
 
@@ -278,9 +291,12 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
+        var ridemodal = document.getElementById("rideRequest");
 
+        // Get the button that opens the modal
+        var ridebtn = document.getElementById("rideClose");
         
-
+        ridebtn.onclick = function () { ridemodal.style.display = "none";}
 
         // When the user clicks the button, open the modal
         btn.onclick = function () {
@@ -326,11 +342,16 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+            if (event.target == ridemodal) {
+                ridemodal.style.display = "none";
+            }
         }
 
         document.getElementById("changeBtn").onclick = function () {
             document.getElementById('destinationModal').style.display = 'block';
         }
+
+        
 
     </script>
 </body>

@@ -14,6 +14,7 @@ public partial class _Default : System.Web.UI.Page
     public string img;
     public int notifNum = 0;
     public static string username;
+    public string markersString;
     protected void Page_Load(object sender, EventArgs e) //this is the openNav 
     {
        
@@ -63,19 +64,29 @@ public partial class _Default : System.Web.UI.Page
                 }
             }
         }
-        string markersString= "";
+        markersString= "";
         foreach(Rider rider in riderlist)
         {
-            markersString += "var " + rider.name + @"= new google.maps.Marker({
-              position: " + rider.location +  @",
+            markersString += " var " + rider.name + @" = new google.maps.Marker({
+              animation: google.maps.Animation.BOUNCE,
+              position: { lat: " + rider.lat + @", lng: " + rider.lon + @"},
               map: map,
-              title: 'Destintaion: "+rider.destination +@"'
+              title: 'Destination: " + rider.destination + @"'
             });
+
+            
+             " + rider.name + @".addListener('click', function(){
+                
+                document.getElementById('riderDest').innerHTML = '" + rider.name + @" needs a lift !';
+                 document.getElementById('riderlocation').innerHTML = 'Location: " + rider.lat + rider.lon + @"';
+                 document.getElementById('riderdestination').innerHTML = 'Destination: " + rider.destination + @"';
+                 document.getElementById('rideRequest').style.display = 'block';
+                });
             ";
 
         }
+        
        
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "myScriptName", markersString, true);
     }
 
     [WebMethod]

@@ -9,13 +9,16 @@ using System.Web;
 public class Rider
 {
     public string name;
-    public string location;
+    public string lat;
+    public string lon;
     public string destination;
 
     public Rider(string _name, string _location, string _destination)
     {
         this.name = _name;
-        this.location = _location;
+        string[] latlong = _location.Split(',');
+        this.lat =latlong[0];
+        this.lon = latlong[1];
         this.destination = _destination;
     }
 }
