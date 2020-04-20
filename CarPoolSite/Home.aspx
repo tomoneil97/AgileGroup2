@@ -269,14 +269,17 @@
     </div>
 
     <div id="rideRequest" class="modal">
+        <input type="hidden" id="riderName" value="" />
+        <input type="hidden" id="riderLocation" value="" />
+        <input type="hidden" id="riderDestination" value="" />
         <div class="modal-content">
             <button id="rideClose">Close</button> <br />
-            <label id="riderDest">RIDER wants a lift!</label><br />
-            <label id="riderlocation"> Location: LATLONG</label><br />
-          <label id="riderdestination"> Destination: DESTINATION</label><br />
+            <label id="riderDestTxt"><b>RIDER wants a lift!</b></label><br />
+            <label id="riderlocationTxt"> Location: LATLONG</label><br />
+          <label id="riderdestinationTxt"> Destination: DESTINATION</label><br />
             
-            <br />
-           
+            <hr />
+           <button id="acceptRideBtn">Accept Ride</button>
 
         </div>
     </div>
@@ -296,7 +299,40 @@
         // Get the button that opens the modal
         var ridebtn = document.getElementById("rideClose");
         
-        ridebtn.onclick = function () { ridemodal.style.display = "none";}
+        ridebtn.onclick = function () { ridemodal.style.display = "none"; }
+
+        var accept = document.getElementById("acceptRideBtn");
+
+        accept.onclick = function () {
+            var rName = document.getElementById('riderName').value;
+            var rLocation = document.getElementById('riderLocation').value;
+            var rDestination = document.getElementById('riderDestination').value;
+
+            var request = JSON.stringify({
+                Name : rName,
+                Location : rLocation,
+                Destination : rDestination
+
+            });
+
+             $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/confirmRider",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 data: request,
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+                });  
+            }); 
+            ridemodal.style.display = "none";
+        }
+
 
         // When the user clicks the button, open the modal
         btn.onclick = function () {
@@ -351,8 +387,9 @@
             document.getElementById('destinationModal').style.display = 'block';
         }
 
-        
 
+       
+       
     </script>
 </body>
 

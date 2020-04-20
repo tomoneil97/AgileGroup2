@@ -76,10 +76,17 @@ public partial class _Default : System.Web.UI.Page
 
             
              " + rider.name + @".addListener('click', function(){
-                
-                document.getElementById('riderDest').innerHTML = '" + rider.name + @" needs a lift !';
-                 document.getElementById('riderlocation').innerHTML = 'Location: " + rider.lat + rider.lon + @"';
-                 document.getElementById('riderdestination').innerHTML = 'Destination: " + rider.destination + @"';
+    
+                document.getElementById('riderName').value = '"+rider.name + @"';
+                document.getElementById('riderLocation').value = '" + rider.lat + rider.lon + @"';
+                document.getElementById('riderDestination').value = '" + rider.destination + @"';
+
+
+
+
+                document.getElementById('riderDestTxt').innerHTML = '" + rider.name + @" needs a lift !';
+                 document.getElementById('riderlocationTxt').innerHTML = 'Location: " + rider.lat + rider.lon + @"';
+                 document.getElementById('riderdestinationTxt').innerHTML = 'Destination: " + rider.destination + @"';
                  document.getElementById('rideRequest').style.display = 'block';
                 });
             ";
@@ -119,6 +126,15 @@ public partial class _Default : System.Web.UI.Page
             cmd.ExecuteNonQuery();
         }
             return "Complete";
+    }
+
+    [WebMethod]
+    public static string confirmRider(string Name, string Location, string Destination)
+    {
+
+
+
+        return "Complete";
     }
     
 }
