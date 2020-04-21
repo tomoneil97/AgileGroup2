@@ -131,8 +131,35 @@ public partial class _Default : System.Web.UI.Page
     [WebMethod]
     public static string confirmRider(string Name, string Location, string Destination)
     {
+        DateTime myDateTime = DateTime.Now;
+        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "INSERT INTO [dbo].[RIDE] ([Date],[isActive],[isAccepted],[DriverName],[Destination]) VALUES (@date,@activ,@accept,@uname,@dest)";
+
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
+            cmd.Parameters.AddWithValue("@activ", 1);
+            cmd.Parameters.AddWithValue("@accept", 1);
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@dest", Destination);
+            cmd.ExecuteNonQuery();
+        }
+
+        sql = "UPDATE [dbo].[RIDERS] SET [RideID] = (SELECT Id FROM [dbo].[RIDE] WHERE DriverName = @uname), [isActive] = @actv WHERE RiderUsername = @rname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@actv", 1);
+            cmd.Parameters.AddWithValue("@rname", Name);
+            cmd.ExecuteNonQuery();
+        }
 
         return "Complete";
     }
