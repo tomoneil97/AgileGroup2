@@ -17,7 +17,7 @@ public partial class _Default : System.Web.UI.Page
     public string markersString;
     protected void Page_Load(object sender, EventArgs e) //this is the openNav 
     {
-       
+
         if (Request.Cookies["user"] != null)
         {
             username = Request.Cookies["user"].Value;
@@ -26,10 +26,12 @@ public partial class _Default : System.Web.UI.Page
         if (Actions.isDriver(username) == "True")
         {
             riderView.Visible = false;
+            
             AddUserMarkers();
+            checkForRide();
         }
         List<string> notifs = Actions.Notifications(username);
-        if(notifs.Count == 0)
+        if (notifs.Count == 0)
         {
             notifDiv.Visible = false;
         }
@@ -37,6 +39,45 @@ public partial class _Default : System.Web.UI.Page
         {
             notifNum = notifs.Count;
         }
+    }
+
+    public void checkForRide()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "SELECT Id, isActive FROM dbo.RIDE WHERE [DriverName] = @uname";
+        string id ="";
+        bool active = false;
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                
+                while (reader.Read())
+                {
+                    id = reader.GetInt32(0).ToString();
+                    active = reader.GetBoolean(1);
+                }
+            }
+        }
+        if (active)
+        {
+
+        }
+        if (String.IsNullOrEmpty(id))
+        {
+            return;
+        }
+        else
+        {
+            activeRide.Style.Add("display", "block");
+        }
+
     }
 
     public void AddUserMarkers()
@@ -50,22 +91,22 @@ public partial class _Default : System.Web.UI.Page
         string sql = "SELECT * FROM [dbo].[RIDERS]";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
-           
+
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    if(reader.IsDBNull(3))
+                    if (reader.IsDBNull(3))
                     {
                         Rider rider = new Rider(reader.GetString(1), reader.GetString(4), reader.GetString(6));
                         riderlist.Add(rider);
                     }
-                   
+
                 }
             }
         }
-        markersString= "";
-        foreach(Rider rider in riderlist)
+        markersString = "";
+        foreach (Rider rider in riderlist)
         {
             markersString += " var " + rider.name + @" = new google.maps.Marker({
               animation: google.maps.Animation.BOUNCE,
@@ -77,7 +118,7 @@ public partial class _Default : System.Web.UI.Page
             
              " + rider.name + @".addListener('click', function(){
     
-                document.getElementById('riderName').value = '"+rider.name + @"';
+                document.getElementById('riderName').value = '" + rider.name + @"';
                 document.getElementById('riderLocation').value = '" + rider.lat + rider.lon + @"';
                 document.getElementById('riderDestination').value = '" + rider.destination + @"';
 
@@ -92,12 +133,12 @@ public partial class _Default : System.Web.UI.Page
             ";
 
         }
-        
-       
+
+
     }
 
     [WebMethod]
-    public static string requestRide(string Dest,string U_Loc)
+    public static string requestRide(string Dest, string U_Loc)
     {
         string Destination = Dest;
         string Location = U_Loc;
@@ -113,19 +154,22 @@ public partial class _Default : System.Web.UI.Page
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
 
-        if (Location != ""){
-          
-            sql = "INSERT INTO [dbo].[RIDERS] ([RiderUsername],[Date],[Location],[Destination]) VALUES (@uname,@date,@loc,@dest)";
-        }else return null;
+        if (Location != "")
+        {
 
-        using (SqlCommand cmd = new SqlCommand(sql, conn)){
+            sql = "INSERT INTO [dbo].[RIDERS] ([RiderUsername],[Date],[Location],[Destination]) VALUES (@uname,@date,@loc,@dest)";
+        }
+        else return null;
+
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
             cmd.Parameters.AddWithValue("@uname", username);
             cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
             cmd.Parameters.AddWithValue("@loc", Location);
             cmd.Parameters.AddWithValue("@dest", Destination);
             cmd.ExecuteNonQuery();
         }
-            return "Complete";
+        return "Complete";
     }
 
     [WebMethod]
@@ -140,17 +184,29 @@ public partial class _Default : System.Web.UI.Page
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
 
-        string sql = "INSERT INTO [dbo].[RIDE] ([Date],[isActive],[isAccepted],[DriverName],[Destination]) VALUES (@date,@activ,@accept,@uname,@dest)";
-
+        string sql = "SELECT Id FROM dbo.RIDE WHERE [DriverName] = @uname";
+        string id;
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
-            cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
-            cmd.Parameters.AddWithValue("@activ", 1);
-            cmd.Parameters.AddWithValue("@accept", 1);
             cmd.Parameters.AddWithValue("@uname", username);
-            cmd.Parameters.AddWithValue("@dest", Destination);
-            cmd.ExecuteNonQuery();
+
+            id = cmd.ExecuteScalar()?.ToString();
         }
+        if (String.IsNullOrEmpty(id))
+        {
+            sql = "INSERT INTO [dbo].[RIDE] ([Date],[isActive],[isAccepted],[DriverName],[Destination]) VALUES (@date,@activ,@accept,@uname,@dest)";
+
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
+                cmd.Parameters.AddWithValue("@activ", 0);
+                cmd.Parameters.AddWithValue("@accept", 1);
+                cmd.Parameters.AddWithValue("@uname", username);
+                cmd.Parameters.AddWithValue("@dest", Destination);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
 
         sql = "UPDATE [dbo].[RIDERS] SET [RideID] = (SELECT Id FROM [dbo].[RIDE] WHERE DriverName = @uname), [isActive] = @actv WHERE RiderUsername = @rname";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -163,5 +219,23 @@ public partial class _Default : System.Web.UI.Page
 
         return "Complete";
     }
-    
+
+    [WebMethod]
+    public static string finaliseRide()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+        string sql = "UPDATE [dbo].[RIDE] SET [isActive] = @actv WHERE DriverUsername = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.Parameters.AddWithValue("@actv", 1);
+            cmd.ExecuteNonQuery();
+        }
+
+        return "True";
+    }
 }

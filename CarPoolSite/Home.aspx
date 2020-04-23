@@ -211,7 +211,16 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq7skhdNDoB5ZTzrRMosH3bvys5LVxgyk&callback=initMap">
     </script>
 
+    <div id="activeRide" class="modal" runat="server">
+        <div class ="modal-content">
+            <h1> <b>You have an active ride.</b></h1>
+            <h2>Would you like to continue?</h2>
+            <i>Note: Pressing No will cancel the active ride</i>
+            <button id="activenoBtn">No</button>
+            <button id="activeyesBtn">Yes</button>
+        </div>
 
+    </div>
 
     <div class="request">
         <div id="riderView" runat="server">
@@ -268,6 +277,18 @@
         </div>
     </div>
 
+    <div id="moreRiders" class="modal">
+        <div class="modal-content">
+            
+            <p><b>Would you like to accept more riders</b></p>
+            
+            <hr />
+            <button id="noBtn" ><b>No</b></button>
+             <button id="yesBtn" ><b>Yes</b></button>
+        </div>
+    </div>
+
+
     <div id="rideRequest" class="modal">
         <input type="hidden" id="riderName" value="" />
         <input type="hidden" id="riderLocation" value="" />
@@ -286,6 +307,38 @@
 
 
     <script>
+         document.getElementById("yesBtn").onclick = function () {
+             document.getElementById('moreRiders').style.display = 'none';
+        }
+
+        document.getElementById("noBtn").onclick = function () {
+            $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/finaliseRide",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                     document.getElementById('moreRiders').style.display = 'block';
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+                });  
+            }); 
+             document.getElementById('moreRiders').style.display = 'none';
+        }
+
+         document.getElementById("activeyesBtn").onclick = function () {
+             document.getElementById('activeRide').style.display = 'none';
+        }
+
+        document.getElementById("activenoBtn").onclick = function () {
+             document.getElementById('activeRide').style.display = 'none';
+        }
+
         var modal = document.getElementById("myModal");
 
         // Get the button that opens the modal
@@ -324,6 +377,7 @@
                  data: request,
                  success: function (response) {  
                      $("#Content").text(response.d);  
+                     document.getElementById('moreRiders').style.display = 'block';
                  },  
                  failure: function (response) {  
                      alert(response.d);  
@@ -356,7 +410,8 @@
                  dataType: "json",
                  data: request,
                  success: function (response) {  
-                     $("#Content").text(response.d);  
+                     $("#Content").text(response.d);
+                     
                  },  
                  failure: function (response) {  
                      alert(response.d);  
@@ -367,6 +422,9 @@
 
             modal.style.display = "block";
         }
+
+       
+
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
@@ -386,6 +444,8 @@
         document.getElementById("changeBtn").onclick = function () {
             document.getElementById('destinationModal').style.display = 'block';
         }
+
+
 
 
        
