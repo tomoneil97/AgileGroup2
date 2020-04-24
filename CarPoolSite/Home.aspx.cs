@@ -30,6 +30,10 @@ public partial class _Default : System.Web.UI.Page
             AddUserMarkers();
             checkForRide();
         }
+        else
+        {
+            driverView.Visible = false;
+        }
         List<string> notifs = Actions.Notifications(username);
         if (notifs.Count == 0)
         {
@@ -67,7 +71,8 @@ public partial class _Default : System.Web.UI.Page
         }
         if (active)
         {
-
+            destinationModal.Style.Add("display", "none");
+            directionsModal.Style.Add("display", "block");
         }
         if (String.IsNullOrEmpty(id))
         {
@@ -228,7 +233,7 @@ public partial class _Default : System.Web.UI.Page
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
-        string sql = "UPDATE [dbo].[RIDE] SET [isActive] = @actv WHERE DriverUsername = @uname";
+        string sql = "UPDATE [dbo].[RIDE] SET [isActive] = @actv WHERE DriverName = @uname";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);

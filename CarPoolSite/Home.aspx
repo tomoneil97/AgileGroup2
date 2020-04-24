@@ -233,11 +233,16 @@
         <br />
         <img src="images/powered_by_google_on_non_white.png" />
         </div>
+
+        <div id="driverView" runat="server">
+            <button id="startrideBtn"><b>Start Ride</b></button>
+
+        </div>
         
 
     </div>
 
-    <div id="destinationModal" class="modal">
+    <div id="destinationModal" class="modal" runat="server">
         <div class ="modal-content">
             <h1> Select a location</h1>
             <select id="destination">
@@ -305,6 +310,19 @@
         </div>
     </div>
 
+     <div id="directionsModal" class="modal" runat="server">
+        
+        <div class="modal-content">
+            
+            <h1><b>Ride Overview</b></h1><br />
+           <b>TESTING TESTING 123</b>
+            
+            <hr />
+           <button id="cancelrideBtn">Cancel Ride</button>
+
+        </div>
+    </div>
+
 
     <script>
          document.getElementById("yesBtn").onclick = function () {
@@ -312,7 +330,18 @@
         }
 
         document.getElementById("noBtn").onclick = function () {
-            $(document).ready(function () {  
+            finalizeRide();
+            document.getElementById('moreRiders').style.display = 'none';
+            document.getElementById('directionsModal').style.display = 'block';
+        }
+
+        document.getElementById("startrideBtn").onclick = function () {
+            finalizeRide();
+            document.getElementById('directionsModal').style.display = 'block';
+        }
+
+        function finalizeRide() {
+             $(document).ready(function () {  
              $.ajax({  
                  type: "POST",  
                  url: "Home.aspx/finaliseRide",  
@@ -328,8 +357,8 @@
                  }  
                 });  
             }); 
-             document.getElementById('moreRiders').style.display = 'none';
         }
+        
 
          document.getElementById("activeyesBtn").onclick = function () {
              document.getElementById('activeRide').style.display = 'none';
