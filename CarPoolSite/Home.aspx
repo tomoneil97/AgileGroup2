@@ -231,7 +231,7 @@
 
         <button id="requestBtn" class="request"><b>Request Ride</b></button>
         <br />
-        <img src="images/powered_by_google_on_non_white.png" />
+        
         </div>
 
         <div id="driverView" runat="server">
@@ -239,6 +239,7 @@
 
         </div>
         
+        <img src="images/powered_by_google_on_non_white.png" />
 
     </div>
 
@@ -329,16 +330,8 @@
              document.getElementById('moreRiders').style.display = 'none';
         }
 
-        document.getElementById("noBtn").onclick = function () {
-            finalizeRide();
-            document.getElementById('moreRiders').style.display = 'none';
-            document.getElementById('directionsModal').style.display = 'block';
-        }
-
-        document.getElementById("startrideBtn").onclick = function () {
-            finalizeRide();
-            document.getElementById('directionsModal').style.display = 'block';
-        }
+        
+        
 
         function finalizeRide() {
              $(document).ready(function () {  
@@ -358,6 +351,18 @@
                 });  
             }); 
         }
+
+        document.getElementById("noBtn").onclick = function () {
+            finalizeRide();
+            document.getElementById('moreRiders').style.display = 'none';
+            document.getElementById('directionsModal').style.display = 'block';
+        }
+
+        document.getElementById("startrideBtn").onclick = function () {
+            finalizeRide();
+            document.getElementById('moreRiders').style.display = 'none';
+            document.getElementById('directionsModal').style.display = 'block';
+        }
         
 
          document.getElementById("activeyesBtn").onclick = function () {
@@ -372,6 +377,41 @@
 
         // Get the button that opens the modal
         var btn = document.getElementById("requestBtn");
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+           // GetArrivalTime();
+            
+            var currentDate = new Date();
+            var arrivalTime = new Date(currentDate.getTime() + (durationValue * 1000));
+            document.getElementById("arrival").innerHTML = "Arriving by: " + arrivalTime;
+            document.getElementById("dest").innerHTML = "Your destination is: " + place;
+
+            var request = JSON.stringify({
+                 Dest: place, 
+                 U_Loc: stringpos
+            });
+
+            $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/requestRide",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 data: request,
+                 success: function (response) {  
+                     $("#Content").text(response.d);
+                     
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+             });  
+         });  
+
+
+            modal.style.display = "block";
+        }
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
@@ -417,40 +457,7 @@
         }
 
 
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
-           // GetArrivalTime();
-            
-            var currentDate = new Date();
-            var arrivalTime = new Date(currentDate.getTime() + (durationValue * 1000));
-            document.getElementById("arrival").innerHTML = "Arriving by: " + arrivalTime;
-            document.getElementById("dest").innerHTML = "Your destination is: " + place;
-
-            var request = JSON.stringify({
-                 Dest: place, 
-                 U_Loc: stringpos
-            });
-
-            $(document).ready(function () {  
-             $.ajax({  
-                 type: "POST",  
-                 url: "Home.aspx/requestRide",  
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 data: request,
-                 success: function (response) {  
-                     $("#Content").text(response.d);
-                     
-                 },  
-                 failure: function (response) {  
-                     alert(response.d);  
-                 }  
-             });  
-         });  
-
-
-            modal.style.display = "block";
-        }
+        
 
        
 

@@ -25,14 +25,14 @@ public partial class _Default : System.Web.UI.Page
         img = Actions.getProfileImage(username);
         if (Actions.isDriver(username) == "True")
         {
-            riderView.Visible = false;
-            
+            riderView.Style.Add("display", "none");
+
             AddUserMarkers();
             checkForRide();
         }
         else
         {
-            driverView.Visible = false;
+            driverView.Style.Add("display", "none");
         }
         List<string> notifs = Actions.Notifications(username);
         if (notifs.Count == 0)
