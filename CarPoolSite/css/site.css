@@ -95,7 +95,7 @@ div.request {
     color: white;
     position: fixed;
     position: absolute;
-    bottom: 0px;
+    bottom: 1px;
     width: 100%;
     padding-bottom: 2.5%;
     padding-left: 10%;
@@ -103,7 +103,8 @@ div.request {
 <<<<<<< HEAD:CarPool/wwwroot/css/site.css
 =======
     padding-right: 10%;
->>>>>>> a9d9b0fa86b3ea4fe298ac093e38a66c987e824e:WebApplication6/wwwroot/css/site.css
+>>>>>>> a9d9b0fa86b3ea4fe298ac093e38a66c987e824e:WebApplication6/wwwroot/css/site.css;
+    left: 11px;
 }
 
 button.request {
