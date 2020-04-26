@@ -324,6 +324,25 @@
         </div>
     </div>
 
+    <div id="riderActive" class="modal" runat="server">
+
+        <div class="modal-content"> 
+            <h1>You have already requested a ride</h1>
+            <b> Would you like to cancel the ride or continue to menu?</b>
+             <button id="continueriderBtn">Continue</button>
+            <button id="cancelriderBtn">Cancel Ride</button>
+        </div>
+    </div>
+
+     <div id="acceptedRider" class="modal" runat="server">
+
+        <div class="modal-content"> 
+            <h1>You have already requested a ride</h1>
+            <b> Would you like to cancel the ride or continue to menu?</b>
+             
+            <button id="cancelacceptedriderBtn">Cancel Ride</button>
+        </div>
+    </div>
 
     <script>
          document.getElementById("yesBtn").onclick = function () {
@@ -481,7 +500,14 @@
             document.getElementById('destinationModal').style.display = 'block';
         }
 
+        document.getElementById("continueriderBtn").onclick = function () {
+            document.getElementById("requestBtn").style.display = "none";
+             document.getElementById('riderActive').style.display = 'none';
+        }
 
+         document.getElementById("cancelriderBtn").onclick = function () {
+             document.getElementById('riderActive').style.display = 'block';
+        }
 
 
        

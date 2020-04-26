@@ -28,11 +28,13 @@ public partial class _Default : System.Web.UI.Page
             riderView.Style.Add("display", "none");
 
             AddUserMarkers();
-            checkForRide();
+            DrivercheckForRide();
         }
         else
         {
             driverView.Style.Add("display", "none");
+
+            RidercheckForRide();
         }
         List<string> notifs = Actions.Notifications(username);
         if (notifs.Count == 0)
@@ -45,7 +47,7 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
-    public void checkForRide()
+    public void DrivercheckForRide()
     {
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
@@ -81,6 +83,46 @@ public partial class _Default : System.Web.UI.Page
         else
         {
             activeRide.Style.Add("display", "block");
+        }
+
+    }
+
+    public void RidercheckForRide()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "SELECT Id, isActive FROM dbo.RIDERS WHERE [RiderUsername] = @uname";
+        string id = "";
+        bool active = false;
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    id = reader.GetInt32(0).ToString();
+                    active = reader.GetBoolean(1);
+                }
+            }
+        }
+        if (active)
+        {
+            destinationModal.Style.Add("display", "none");
+            acceptedRider.Style.Add("display", "block");
+        }
+        if (String.IsNullOrEmpty(id))
+        {
+            return;
+        }
+        else
+        {
+            riderActive.Style.Add("display", "block");
         }
 
     }
