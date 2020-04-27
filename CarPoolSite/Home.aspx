@@ -12,6 +12,8 @@
             max-height: 75%;
             width: 100%; /* The width is the width of the web page */
             position:absolute;
+            top: 68px;
+            left: 7px;
         }
     </style>
     

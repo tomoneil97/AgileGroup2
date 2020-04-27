@@ -87,6 +87,22 @@ public class Actions
         }
     }
 
+    public static string isAdmin(string username)
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "SELECT [isAdmin] FROM dbo.CARPOOLUSER WHERE [Username] = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            string result = cmd.ExecuteScalar()?.ToString();
+            return result; //Returns true or false
+        }
+    }
+
     public static List<string> Notifications(string username)
     {
         List<string> notifs = new List<string>();
@@ -108,6 +124,7 @@ public class Actions
                     notifs.Add(reader.GetString(0));
                 }
             }
+            //Response.Redirect("AdminHome.aspx");
         }
         return notifs;
     }

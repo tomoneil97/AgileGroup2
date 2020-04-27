@@ -18,11 +18,18 @@ public partial class _Default : System.Web.UI.Page
     {
         string username = Request.Form["uname"];
         string password = Request.Form["psw"];
+
         if (Actions.Logon(username, password))
         {
             Response.Cookies["user"].Value = username;
             Response.Cookies["user"].Expires = DateTime.Now.AddMinutes(10);
-            Response.Redirect("Home.aspx");
+            string isAdmin = Actions.isAdmin(username);
+
+            if (isAdmin == "True")
+            {
+                Response.Redirect("AdminHome.aspx");
+            }
+            else Response.Redirect("Home.aspx");
         }
         else
         {
