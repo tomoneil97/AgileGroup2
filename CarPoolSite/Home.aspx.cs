@@ -98,6 +98,7 @@ public partial class _Default : System.Web.UI.Page
         string sql = "SELECT Id, isActive FROM dbo.RIDERS WHERE [RiderUsername] = @uname";
         string id = "";
         bool active = false;
+       
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
@@ -108,6 +109,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     id = reader.GetInt32(0).ToString();
                     active = reader.GetBoolean(1);
+                   
                 }
             }
         }
@@ -284,5 +286,40 @@ public partial class _Default : System.Web.UI.Page
         }
 
         return "True";
+    }
+
+    [WebMethod]
+    public static string CancelRider()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+        string sql = "DELETE FROM RIDERS WHERE RiderUsername = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.ExecuteNonQuery();
+        }
+        return "done";
+    }
+
+    [WebMethod]
+    public static string CancelRide()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "DELETE FROM RIDE WHERE DriverName = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.ExecuteNonQuery();
+        }
+        return "done";
     }
 }
