@@ -15,6 +15,7 @@ public partial class _Default : System.Web.UI.Page
     public int notifNum = 0;
     public static string username;
     public string markersString;
+    public string notifications;
     protected void Page_Load(object sender, EventArgs e) //this is the openNav 
     {
 
@@ -36,7 +37,7 @@ public partial class _Default : System.Web.UI.Page
 
             RidercheckForRide();
         }
-        List<string> notifs = Actions.Notifications(username);
+        Dictionary<string, string> notifs = Actions.Notifications(username);
         if (notifs.Count == 0)
         {
             notifDiv.Visible = false;
@@ -44,6 +45,11 @@ public partial class _Default : System.Web.UI.Page
         else
         {
             notifNum = notifs.Count;
+            foreach(KeyValuePair<string,string> entry in notifs)
+            {
+                notifications += "<tr> <td>" + entry.Key + "</td> <td> " + entry.Value + "</td> </tr>";
+                    
+            }
         }
     }
 
@@ -56,14 +62,14 @@ public partial class _Default : System.Web.UI.Page
         conn.Open();
 
         string sql = "SELECT Id, isActive FROM dbo.RIDE WHERE [DriverName] = @uname";
-        string id ="";
+        string id = "";
         bool active = false;
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                
+
                 while (reader.Read())
                 {
                     id = reader.GetInt32(0).ToString();
@@ -98,6 +104,7 @@ public partial class _Default : System.Web.UI.Page
         string sql = "SELECT Id, isActive FROM dbo.RIDERS WHERE [RiderUsername] = @uname";
         string id = "";
         bool active = false;
+
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
@@ -108,6 +115,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     id = reader.GetInt32(0).ToString();
                     active = reader.GetBoolean(1);
+
                 }
             }
         }
@@ -264,6 +272,15 @@ public partial class _Default : System.Web.UI.Page
             cmd.ExecuteNonQuery();
         }
 
+        sql = "INSERT INTO [dbo].[NOTIFICATION] ([Recipient],[Message],[Date]) VALUES (@to,@msg,@date)";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@to", Name);
+            cmd.Parameters.AddWithValue("@msg", username + " has accepted your ride!");
+            cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
+            cmd.ExecuteNonQuery();
+        }
+
         return "Complete";
     }
 
@@ -284,5 +301,100 @@ public partial class _Default : System.Web.UI.Page
         }
 
         return "True";
+    }
+
+    [WebMethod]
+    public static string CancelRider()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+        string sql = "DELETE FROM RIDERS WHERE RiderUsername = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.ExecuteNonQuery();
+        }
+
+        string drivername ="";
+        sql = "SELECT DriverName FROM RIDE WHERE Id = (SELECT RideID FROM RIDERS WHERE RiderUsername = @uname)";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    drivername = reader.GetString(0);
+                }
+            }
+        }
+
+        DateTime myDateTime = DateTime.Now;
+        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+        sql = "INSERT INTO [dbo].[NOTIFICATION] ([Recipient],[Message],[Date]) VALUES(@to, @msg, @date)";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@to", drivername);
+            cmd.Parameters.AddWithValue("@msg", username + " has canceled your ride!");
+            cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
+            cmd.ExecuteNonQuery();
+        }
+
+        return "done";
+    }
+
+    [WebMethod]
+    public static string CancelRide()
+    {
+        string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
+
+        SqlConnection conn = new SqlConnection();
+        conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
+        conn.Open();
+
+        string sql = "DELETE FROM RIDE WHERE DriverName = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.ExecuteNonQuery();
+        }
+
+        List<string> riders = new List<string>();
+        sql = "SELECT RiderUsername FROM RIDERS WHERE RideID = (SELECT RideID FROM RIDE WHERE DriverName = @dname)";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@dname", username);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    riders.Add(reader.GetString(0));
+                }
+            }
+
+            
+        }
+        DateTime myDateTime = DateTime.Now;
+        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        sql = "INSERT INTO [dbo].[NOTIFICATION] ([Recipient],[Message],[Date]) VALUES(@to, @msg, @date)";
+        foreach ( string rider in riders)
+        {
+            
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@to", rider);
+                cmd.Parameters.AddWithValue("@msg", username + " has canceled your ride!");
+                cmd.Parameters.AddWithValue("@date", sqlFormattedDate);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
+
+        return "done";
     }
 }

@@ -23,7 +23,7 @@ public partial class _Default : System.Web.UI.Page
             username = Request.Cookies["user"].Value;
         }
         img = Actions.getProfileImage(username);
-        List<string> notifs = Actions.Notifications(username);
+        Dictionary<string, string> notifs = Actions.Notifications(username);
         if (notifs.Count == 0)
         {
             notifDiv.Visible = false;

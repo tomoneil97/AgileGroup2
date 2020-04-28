@@ -28,7 +28,7 @@
             
             <input type="image" src="<%=img %>" alt="icon" class="userIcon" onclick="openNav()">
             <button id="changeBtn"><b>Change Location</b></button>
-             <a href="#" class="notification">
+             <a id="123" href="#" class="notification" onclick="document.getElementById('Div1').style.display = 'block'">
                 <span>Inbox</span>
                  <div id="notifDiv" runat="server">
                      <span class="badge"><% =notifNum %></span>
@@ -332,17 +332,38 @@
             <h1>You have already requested a ride</h1>
             <b> Would you like to cancel the ride or continue to menu?</b>
              <button id="continueriderBtn">Continue</button>
-            <button id="cancelriderBtn">Cancel Ride</button>
+            <button   id="cancelriderBtn">Cancel Ride</button>
         </div>
     </div>
 
      <div id="acceptedRider" class="modal" runat="server">
 
         <div class="modal-content"> 
-            <h1>You have already requested a ride</h1>
-            <b> Would you like to cancel the ride or continue to menu?</b>
+            <h1>Your ride has been accepted</h1>
+            <b> Would you like to cancel the ride?</b>
              
             <button id="cancelacceptedriderBtn">Cancel Ride</button>
+            
+        </div>
+    </div>
+
+     <div id="Div1" class="modal" runat="server">
+
+        <div class="modal-content"> 
+             <table>
+            <thead>
+                <tr>
+                    <th> Date</th>
+                    <th> Message </th>
+                    
+                </tr>
+            </thead>
+                 <tbody>
+                     <%=notifications %>
+                 </tbody>
+             </table>
+            <button id="closeNotifs">Close</button>
+            
         </div>
     </div>
 
@@ -351,7 +372,9 @@
              document.getElementById('moreRiders').style.display = 'none';
         }
 
-        
+        document.getElementById("closeNotifs").onclick = function () {
+            document.getElementById("Div1").style.display = 'none';
+        }
         
 
         function finalizeRide() {
@@ -508,10 +531,63 @@
         }
 
          document.getElementById("cancelriderBtn").onclick = function () {
-             document.getElementById('riderActive').style.display = 'block';
+             $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/CancelRider",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                     location.reload();
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+                });  
+            }); 
         }
 
+        document.getElementById("cancelacceptedriderBtn").onclick = function () {
 
+            $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/CancelRider",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                     location.reload();
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+                });  
+            }); 
+        }
+
+        document.getElementById("cancelrideBtn").onclick = function () {
+             $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/CancelRide",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                     location.reload();
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+                });  
+            }); 
+        }
+        
        
        
     </script>
