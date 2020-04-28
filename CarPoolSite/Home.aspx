@@ -28,7 +28,7 @@
             
             <input type="image" src="<%=img %>" alt="icon" class="userIcon" onclick="openNav()">
             <button id="changeBtn"><b>Change Location</b></button>
-             <a href="#" class="notification">
+             <a id="123" href="#" class="notification" onclick="document.getElementById('Div1').style.display = 'block'">
                 <span>Inbox</span>
                  <div id="notifDiv" runat="server">
                      <span class="badge"><% =notifNum %></span>
@@ -347,12 +347,34 @@
         </div>
     </div>
 
+     <div id="Div1" class="modal" runat="server">
+
+        <div class="modal-content"> 
+             <table>
+            <thead>
+                <tr>
+                    <th> Date</th>
+                    <th> Message </th>
+                    
+                </tr>
+            </thead>
+                 <tbody>
+                     <%=notifications %>
+                 </tbody>
+             </table>
+            <button id="closeNotifs">Close</button>
+            
+        </div>
+    </div>
+
     <script>
          document.getElementById("yesBtn").onclick = function () {
              document.getElementById('moreRiders').style.display = 'none';
         }
 
-        
+        document.getElementById("closeNotifs").onclick = function () {
+            document.getElementById("Div1").style.display = 'none';
+        }
         
 
         function finalizeRide() {

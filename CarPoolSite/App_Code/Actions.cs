@@ -103,16 +103,16 @@ public class Actions
         }
     }
 
-    public static List<string> Notifications(string username)
+    public static Dictionary<string, string> Notifications(string username)
     {
-        List<string> notifs = new List<string>();
+        Dictionary<string, string> notifs = new Dictionary<string, string>(); ;
 
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
 
-        string sql = "SELECT [Message] FROM dbo.NOTIFICATION WHERE [Recipient] = @uname AND [Read] = @f";
+        string sql = "SELECT [Date],[Message] FROM dbo.NOTIFICATION WHERE [Recipient] = @uname AND [Read] = @f";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
@@ -121,7 +121,8 @@ public class Actions
             {
                 while (reader.Read())
                 {
-                    notifs.Add(reader.GetString(0));
+                    
+                    notifs.Add(reader.GetString(0), reader.GetString(1));
                 }
             }
             //Response.Redirect("AdminHome.aspx");
