@@ -39,6 +39,8 @@ public partial class SignUp :  System.Web.UI.Page
         passWord = Encryption.Encrypt(passWord);
 
         newUser = new User(userName, passWord, foreName, surName, gender);
+
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
@@ -92,6 +94,7 @@ public partial class SignUp :  System.Web.UI.Page
 
         string course = Request.Form["course"];
 
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";

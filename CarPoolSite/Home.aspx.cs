@@ -55,6 +55,7 @@ public partial class _Default : System.Web.UI.Page
 
     public void DrivercheckForRide()
     {
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
@@ -95,6 +96,7 @@ public partial class _Default : System.Web.UI.Page
 
     public void RidercheckForRide()
     {
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
@@ -138,6 +140,8 @@ public partial class _Default : System.Web.UI.Page
     public void AddUserMarkers()
     {
         List<Rider> riderlist = new List<Rider>();
+
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
@@ -160,6 +164,8 @@ public partial class _Default : System.Web.UI.Page
                 }
             }
         }
+
+        //creates javascript which is inserted in the home page
         markersString = "";
         foreach (Rider rider in riderlist)
         {
@@ -192,6 +198,8 @@ public partial class _Default : System.Web.UI.Page
 
     }
 
+    //using WebMethod to run back-end code asynchronously 
+
     [WebMethod]
     public static string requestRide(string Dest, string U_Loc)
     {
@@ -203,6 +211,7 @@ public partial class _Default : System.Web.UI.Page
         DateTime myDateTime = DateTime.Now;
         string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
@@ -233,6 +242,7 @@ public partial class _Default : System.Web.UI.Page
         DateTime myDateTime = DateTime.Now;
         string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
@@ -287,6 +297,7 @@ public partial class _Default : System.Web.UI.Page
     [WebMethod]
     public static string finaliseRide()
     {
+        //gets the localpath of the database so it can work on other hosts
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
 
         SqlConnection conn = new SqlConnection();
@@ -311,15 +322,9 @@ public partial class _Default : System.Web.UI.Page
         SqlConnection conn = new SqlConnection();
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
-        string sql = "DELETE FROM RIDERS WHERE RiderUsername = @uname";
-        using (SqlCommand cmd = new SqlCommand(sql, conn))
-        {
-            cmd.Parameters.AddWithValue("@uname", username);
-            cmd.ExecuteNonQuery();
-        }
 
-        string drivername ="";
-        sql = "SELECT DriverName FROM RIDE WHERE Id = (SELECT RideID FROM RIDERS WHERE RiderUsername = @uname)";
+        string drivername = "";
+        string sql = "SELECT DriverName FROM RIDE WHERE Id = (SELECT RideID FROM RIDERS WHERE RiderUsername = @uname)";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@uname", username);
@@ -331,6 +336,14 @@ public partial class _Default : System.Web.UI.Page
                 }
             }
         }
+         sql = "DELETE FROM RIDERS WHERE RiderUsername = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.ExecuteNonQuery();
+        }
+
+       
 
         DateTime myDateTime = DateTime.Now;
         string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");

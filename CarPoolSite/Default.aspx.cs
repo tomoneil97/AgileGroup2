@@ -16,11 +16,14 @@ public partial class _Default : System.Web.UI.Page
 
     protected void Login(object sender, EventArgs e)
     {
+        //gets username and password from form
         string username = Request.Form["uname"];
         string password = Request.Form["psw"];
 
+        //checks the username and password against the database
         if (Actions.Logon(username, password))
         {
+            //creates an authentication cookie
             Response.Cookies["user"].Value = username;
             Response.Cookies["user"].Expires = DateTime.Now.AddMinutes(10);
             string isAdmin = Actions.isAdmin(username);

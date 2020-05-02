@@ -414,6 +414,22 @@
         }
 
         document.getElementById("activenoBtn").onclick = function () {
+            $(document).ready(function () {  
+             $.ajax({  
+                 type: "POST",  
+                 url: "Home.aspx/CancelRide",  
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 
+                 success: function (response) {  
+                     $("#Content").text(response.d);  
+                     location.reload();
+                 },  
+                 failure: function (response) {  
+                     alert(response.d);  
+                 }  
+                });  
+            }); 
              document.getElementById('activeRide').style.display = 'none';
         }
 

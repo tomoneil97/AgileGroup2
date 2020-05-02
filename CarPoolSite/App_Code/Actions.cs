@@ -105,7 +105,7 @@ public class Actions
 
     public static Dictionary<string, string> Notifications(string username)
     {
-        Dictionary<string, string> notifs = new Dictionary<string, string>(); ;
+        Dictionary<string, string> notifs = new Dictionary<string, string>(); 
 
         string localPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + @"App_Data\Database.mdf";
         SqlConnection conn = new SqlConnection();
