@@ -1,0 +1,14 @@
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\unitTest_Project2.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\unitTest_Project2.pdb
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\obj\Release\unitTesting.csprojAssemblyReference.cache
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\obj\Release\unitTesting.csproj.CoreCompileInputs.cache
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\obj\Release\unitTesting.csproj.CopyComplete
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\obj\Release\unitTest_Project2.dll
+C:\Users\tomeo\Documents\GitHub\AgileGroup2\unitTest_Project2\obj\Release\unitTest_Project2.pdb
