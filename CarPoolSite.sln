@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.84
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CarPoolSite", "CarPoolSite\", "{DFF0BB27-B599-4CEA-A016-CC07851A1E72}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -25,13 +25,22 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CarPoolSite", "CarPoolSite\
 		DefaultWebSiteLanguage = "Visual Basic"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unitTesting", "unitTest_Project2\unitTesting.csproj", "{AE3AE913-020C-49D3-89F7-206B6DB3F48E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DFF0BB27-B599-4CEA-A016-CC07851A1E72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DFF0BB27-B599-4CEA-A016-CC07851A1E72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF0BB27-B599-4CEA-A016-CC07851A1E72}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF0BB27-B599-4CEA-A016-CC07851A1E72}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{AE3AE913-020C-49D3-89F7-206B6DB3F48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE3AE913-020C-49D3-89F7-206B6DB3F48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE3AE913-020C-49D3-89F7-206B6DB3F48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE3AE913-020C-49D3-89F7-206B6DB3F48E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
