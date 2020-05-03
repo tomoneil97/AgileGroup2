@@ -369,15 +369,8 @@ public partial class _Default : System.Web.UI.Page
         conn.ConnectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = " + localPath + "; Integrated Security = True";
         conn.Open();
 
-        string sql = "DELETE FROM RIDE WHERE DriverName = @uname";
-        using (SqlCommand cmd = new SqlCommand(sql, conn))
-        {
-            cmd.Parameters.AddWithValue("@uname", username);
-            cmd.ExecuteNonQuery();
-        }
-
         List<string> riders = new List<string>();
-        sql = "SELECT RiderUsername FROM RIDERS WHERE RideID = (SELECT RideID FROM RIDE WHERE DriverName = @dname)";
+        string sql = "SELECT RiderUsername FROM RIDERS WHERE RideID = (SELECT RideID FROM RIDE WHERE DriverName = @dname)";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
             cmd.Parameters.AddWithValue("@dname", username);
@@ -389,8 +382,17 @@ public partial class _Default : System.Web.UI.Page
                 }
             }
 
-            
+
         }
+
+         sql = "DELETE FROM RIDE WHERE DriverName = @uname";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@uname", username);
+            cmd.ExecuteNonQuery();
+        }
+
+       
         DateTime myDateTime = DateTime.Now;
         string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
         sql = "INSERT INTO [dbo].[NOTIFICATION] ([Recipient],[Message],[Date]) VALUES(@to, @msg, @date)";
